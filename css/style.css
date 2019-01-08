@@ -1,0 +1,368 @@
+   /* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+   html,
+   body,
+   div,
+   span,
+   applet,
+   object,
+   iframe,
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   h6,
+   p,
+   blockquote,
+   pre,
+   a,
+   abbr,
+   acronym,
+   address,
+   big,
+   cite,
+   code,
+   del,
+   dfn,
+   em,
+   img,
+   ins,
+   kbd,
+   q,
+   s,
+   samp,
+   small,
+   strike,
+   strong,
+   sub,
+   sup,
+   tt,
+   var,
+   b,
+   u,
+   i,
+   center,
+   dl,
+   dt,
+   dd,
+   ol,
+   ul,
+   li,
+   fieldset,
+   form,
+   label,
+   legend,
+   table,
+   caption,
+   tbody,
+   tfoot,
+   thead,
+   tr,
+   th,
+   td,
+   article,
+   aside,
+   canvas,
+   details,
+   embed,
+   figure,
+   figcaption,
+   footer,
+   header,
+   hgroup,
+   menu,
+   nav,
+   output,
+   ruby,
+   section,
+   summary,
+   time,
+   mark,
+   audio,
+   video {
+       margin: 0;
+       padding: 0;
+       border: 0;
+       font-size: 100%;
+       font: inherit;
+       vertical-align: baseline;
+       box-sizing: border-box;
+   }
+
+   /* HTML5 display-role reset for older browsers */
+   article,
+   aside,
+   details,
+   figcaption,
+   figure,
+   footer,
+   header,
+   hgroup,
+   menu,
+   nav,
+   section {
+       display: block;
+   }
+
+   body {
+       line-height: 1;
+       font-family: Tahoma, Verdana, Arial;
+
+   }
+
+   ol,
+   ul {
+       list-style: none;
+   }
+
+   blockquote,
+   q {
+       quotes: none;
+   }
+
+   blockquote:before,
+   blockquote:after,
+   q:before,
+   q:after {
+       content: '';
+       content: none;
+   }
+
+   table {
+       border-collapse: collapse;
+       border-spacing: 0;
+       border: 1px solid black;
+   }
+
+   tr,
+   td,
+   th {
+       border: 1px solid black;
+   }
+
+   /*
+   * {
+      margin:0;
+      padding:0;
+   }
+*/
+   td.center {
+       text-align: center;
+   }
+
+   td.border-left,
+   th.border-left {
+       border-left: 1px solid black;
+       border-right: 0px;
+   }
+
+   td.border-top,
+   th.border-top {
+       border-top: 1px solid black;
+   }
+
+   td.border-bottom,
+   th.border-bottom {
+       border-bottom: 1px solid black;
+   }
+
+   table td.border-right,
+   table th.border-right {
+       border-right: 1px solid black;
+       border-left: none; 
+   }
+
+   table td.border-none {
+       border: none;
+   }
+
+   table td.named,
+   table td.ekz1 ,
+   table td.ekz2 ,
+   table td.ekz3 ,
+   table td.ekz4 ,
+   table td.zach1,
+   table td.zach2,
+   table td.zach3,
+   table td.zach4,
+   table td.indz1,
+   table td.indz2,
+   table td.indz3,
+   table td.indz4,
+   #iekz,#izach,#iindz
+    {
+       cursor: pointer;
+   }
+
+   .clocks {
+       background-color: #f0f5f5;
+   }
+
+   .cycleheader,
+   .cyclefooter,
+   .planfooter {
+       font-weight: bold;
+       font-style: italic;
+   }
+
+   .vertical {
+       /*     -webkit-writing-mode: vertical-rl; */
+       writing-mode: vertical-rl;
+       /*      -moz-writing-mode:sideways-lr; */
+
+       transform: rotate(180deg);
+
+       /*      -webkit-transform: rotate(180deg); */
+
+       text-align: right;
+   }
+
+   .fillblack {
+       position: fixed;
+       top: 0px;
+       left: 0px;
+       width: 100vw;
+       height: 100vh;
+       background-color: rgba(0, 0, 0, 0.7);
+       display: none;
+   }
+
+   #blackwindow {
+       z-index: 100;
+   }
+
+   #blackwindowekz {
+       z-index: 150;
+   }
+
+   .fillblack.active,
+   #updatediscform.active,
+   #updateekzform.active,
+   #isem1.active,
+   #isem2.active,
+   #isem3.active,
+   #isem4.active,
+   #isem5.active,
+   #isem6.active,
+   #isem7.active,
+   #isem8.active
+    {
+       display: block; 
+   }
+   #isem1,
+   #isem2,
+   #isem3,
+   #isem4,
+   #isem5,
+   #isem6,
+   #isem7,
+   #isem8
+    {
+    display:none;
+   }
+
+   #updatediscform {
+       display: none;
+       position: fixed;
+       width: 80vmax;
+       z-index: 110;
+       fill: white;
+       left: 10vmax;
+       top: 10vmin;
+       font-family: Verdana, Tahoma, Arial;
+   }
+
+   #updateekzform {
+       display: none;
+       position: fixed;
+       width: 20vmax;
+       z-index: 160;
+       fill: white;
+       left: 40vmax;
+       top: 30vmin;
+       font-family: Verdana, Tahoma, Arial;
+   }
+
+   #closeform,
+   #closeformekz {
+       width: 1.5vmax;
+       height: 1.5vmax;
+       position: absolute;
+       top: -2vmax;
+       right: -2vmax;
+       cursor: pointer;
+       fill: white;
+   }
+
+   #contentform,
+   #contentformekz {
+       background-color: white;
+       border-radius: 0.33vmax;
+       padding: 1vw;
+       width: 100%;
+   }
+
+   .inputrow {
+       /*   background-color:blue; */
+       width: 100%;
+   }
+
+   /*
+     #firstinputrow .label,#firstinputrow .item .input{
+          width:100%;
+      height:40%;
+    }
+*/
+   .inputrow input {
+       width: 100%;
+       font-size: 110%;
+       color: blue;
+   }
+
+   #btnaccept,
+   #btnacceptekz {
+       width: 100%;
+       height: 5vmin;
+       border: 1px solid black;
+       border-radius: 0.5vmax;
+       cursor: pointer;
+       background-color: white;
+   }
+
+   #btnaccept:hover,
+   #btnacceptekz:hover {
+       background-color: lime;
+   }
+
+   /*
+    table {
+      width:100vw;
+      height: 320px;
+     display: block;
+     overflow: scroll;
+    }
+    
+
+    thead {
+      display:block;
+      width:inherit;
+    }
+    
+    tbody {
+      display:block;
+      width:inherit;
+      height:80vh;
+      overflow:auto;
+    }
+    
+    table>thead>tr>th,
+    table>thead>tr>td {
+  background: #009688;
+  color: #fff;
+  top: 0px;
+  position: sticky;
+}
+*/
