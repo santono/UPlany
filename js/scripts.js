@@ -8,7 +8,7 @@ let uplan = {
     okr: "Бакалавр",
     srokob: "4",
     kafedra: "Информационные и управляющих систем",
-    clockpersemestr: [17, 17, 17, 17, 17, 17, 14, 14],
+    weekpersemestr: [17, 17, 17, 17, 17, 17, 14, 14],
     cycly: [{
             shifr: "Б1",
             name: "Гуманитарный, социальный и экономический цикл",
@@ -1101,13 +1101,13 @@ let semclocks = [{ id: 1, name: '0 0 1', clocks: [0, 0, 1] },
 ];
 class Up {
     constructor(uplanouter, bodyfinded) {
-        this.disciplina = null;
-        this.cycle = null;
-        this.part = null;;
-        this.discRow = null;
+        this.disciplina   = null;
+        this.cycle        = null;
+        this.part         = null;;
+        this.discRow      = null;
         this.savedDiscRow = null;
-        this.uplan = uplanouter;
-        this.body = bodyfinded;
+        this.uplan        = uplanouter;
+        this.body         = bodyfinded;
     }
     saveDiscRow() {
         if (this.discRow)
@@ -1166,6 +1166,51 @@ class Up {
                 }
         }
         this.discRow = discipline;
+    }
+    calculateClocksUsingSemestry() {
+        let clockLek = 0;
+        let clockLab = 0;
+        let clockPra = 0;
+        let clockSam = 0;
+        let self=this;
+        if (this.discRow.semestry
+            && Array.isArray(this.discRow.semestry)) {
+            clockLek=this.discRow.semestry.reduce(function (clockSum,current) {
+                let clockTmp,semLen,nomSemestra,weeks,sumTmp;
+                clockTmp=current.clocks
+                              &&Array.isArray(current.clocks)
+                              &&current.clocks.length==3?current.clocks[0]:0;
+                nomSemestra=current.nomsemestra;
+                weeks=nomSemestra&&nomSemestra>0&&nomSemestra<9?self.uplan.weekpersemestr[nomSemestra-1]:0; 
+                sumTmp=clockTmp*weeks; 
+                return clockSum+sumTmp;
+            },0);
+            clockLab=this.discRow.semestry.reduce(function (clockSum,current) {
+                let clockTmp,semLen,nomSemestra,weeks,sumTmp;
+                clockTmp=current.clocks
+                              &&Array.isArray(current.clocks)
+                              &&current.clocks.length==3?current.clocks[1]:0;
+                nomSemestra=current.nomsemestra;
+                weeks=nomSemestra&&nomSemestra>0&&nomSemestra<9?self.uplan.weekpersemestr[nomSemestra-1]:0; 
+                sumTmp=clockTmp*weeks; 
+                return clockSum+sumTmp;
+            },0);
+            clockPra=this.discRow.semestry.reduce(function (clockSum,current) {
+                let clockTmp,semLen,nomSemestra,weeks,sumTmp;
+                clockTmp=current.clocks
+                              &&Array.isArray(current.clocks)
+                              &&current.clocks.length==3?current.clocks[2]:0;
+                nomSemestra=current.nomsemestra;
+                weeks=nomSemestra&&nomSemestra>0&&nomSemestra<9?self.uplan.weekpersemestr[nomSemestra-1]:0; 
+                sumTmp=clockTmp*weeks; 
+                return clockSum+sumTmp;
+            },0);
+            clockSam=this.discRow-clockLek-clockLab-clockSam;
+            this.discRow.clocklek=clockLek;
+            this.discRow.clocklab=clockLab;
+            this.discRow.clockpra=clockPra;
+            this.discRow.clocksam=clockSam;
+        }
     }
     fillUpdateDiscFormEkzZachIndz() {
         // Заполнить поля списков экзаменов, зачетов и индивидуальных заданий
@@ -1708,7 +1753,7 @@ class Up {
     replaceUPlanDiscRowInHTMLTable() {
         let rootSelector = 'tr[data-did="' + this.discRow.did + '"] td';
         let currSelector = rootSelector + ".shifrd";
-        let i, j, val;
+        let i, j, val, nameSem;
         //       console.log(" amount of finded="+$(currSelector).length+ " for selector="+currSelector);
         $(currSelector).text(this.discRow.shifr);
         $(rootSelector + ".named").text(this.discRow.name);
@@ -1746,10 +1791,35 @@ class Up {
         }
         $(rootSelector + ".clocktot").text(this.discRow.clocktot);
         $(rootSelector + ".clockze").text(this.discRow.ze);
-        $(rootSelector + ".clocklek").text(this.discRow.clocklek);
-        $(rootSelector + ".clocklab").text(this.discRow.clocklab);
-        $(rootSelector + ".clockpra").text(this.discRow.clockpra);
-        $(rootSelector + ".clocksam").text(this.discRow.clocksam);
+        $(rootSelector + ".clocklek").text(this.discRow.clocklek>0?this.discRow.clocklek:"");
+        $(rootSelector + ".clocklab").text(this.discRow.clocklab>0?this.discRow.clocklab:"");
+        $(rootSelector + ".clockpra").text(this.discRow.clockpra>0?this.discRow.clockpra:"");
+        $(rootSelector + ".clocksam").text(this.discRow.clocksam>0?this.discRow.clocksam:"");
+        for (i=0;i<8;i++) {
+             nameSem=".sem"+(i+1)+"lek";
+             $(rootSelector + nameSem).text("");
+             nameSem=".sem"+(i+1)+"lab";
+             $(rootSelector + nameSem).text("");
+             nameSem=".sem"+(i+1)+"pra";
+             $(rootSelector + nameSem).text("");
+        }
+        if (this.discRow.semestry
+            && Array.isArray(this.discRow.semestry)
+            && this.discRow.semestry.length>0)
+            for (i=0; i<this.discRow.semestry.length; i++) {
+                if (this.discRow.semestry[i].clocks
+                    && Array.isArray(this.discRow.semestry[i].clocks)
+                    && this.discRow.semestry[i].clocks.length==3) {
+                    nameSem=".sem"+this.discRow.semestry[i].nomsemestra+"lek";
+                    $(rootSelector + nameSem).text(this.discRow.semestry[i].clocks[0]);
+                    nameSem=".sem"+this.discRow.semestry[i].nomsemestra+"lab";
+                    $(rootSelector + nameSem).text(this.discRow.semestry[i].clocks[1]);
+                    nameSem=".sem"+this.discRow.semestry[i].nomsemestra+"pra";
+                    $(rootSelector + nameSem).text(this.discRow.semestry[i].clocks[2]);
+                }
+            }
+
+
     }
     replaceUPlanCycleFooterRowInHTMLTable() {
         let footerLine = {
@@ -1889,9 +1959,19 @@ class Up {
     fillSemestryRecForDisc(nomSemestra,index) {
         let i;
         let findedSemestr=undefined;
-        if (up.discRow.semestry
-            && Array.isArray(up.discRow.semestry))
-            findedSemestr=up.discRow.semestry.find(elemSem=>elemSem.nomsemestra==nomSemestra);
+        if (index<0) {
+          let findedIndex=-1;
+          if (this.discRow.semestry
+              && Array.isArray(this.discRow.semestry))
+              findedIndex=up.discRow.semestry.findIndex(elemSem=>elemSem.nomsemestra==nomSemestra);
+              if (findedIndex>=0) {
+                 this.discRow.semestry.splice(findedIndex,1);
+              }
+            return;
+        }
+        if (this.discRow.semestry
+            && Array.isArray(this.discRow.semestry))
+            findedSemestr=this.discRow.semestry.find(elemSem=>elemSem.nomsemestra==nomSemestra);
         if (findedSemestr) {
             findedSemestr.clocks=[];
             findedSemestr.clocks.push(semclocks[index].clocks[0]);
@@ -1901,15 +1981,15 @@ class Up {
             let o = {nomsemestra:+nomSemestra,
                      clocks:[]
             }
-            o.clocks.push(semclocks[index].clocks[0]); 
+            o.clocks.push(semclocks[index].clocks[0]);
             o.clocks.push(semclocks[index].clocks[1]);
             o.clocks.push(semclocks[index].clocks[2]);
-            if (!(up.discRow.semestry
-                  && Array.isArray(up.discRow.semestry)))
-               up.discRow.semestry=[];
-            up.discRow.semestry.push(o);
-            if (up.discRow.semestry.length>1)
-                up.discRow.semestry.sort((a, b) => a.nomsemestra - b.nomsemestra);
+            if (!(this.discRow.semestry
+                  && Array.isArray(this.discRow.semestry)))
+               this.discRow.semestry=[];
+            this.discRow.semestry.push(o);
+            if (this.discRow.semestry.length>1)
+                this.discRow.semestry.sort((a, b) => a.nomsemestra - b.nomsemestra);
         }
     }
     createListForSemestrSelectOnScreen(nomSemestra,clocks) {
@@ -1945,23 +2025,28 @@ class Up {
         nameSemB="#isem"+nomSemestra+"b";
         let elem=document.querySelector(nameSemB);
         select.addEventListener("change", function(ev) {
-//               console.log(this);
                let nomSemestra=this.attributes.getNamedItem("data-nomsemestra").value;
-//               console.log('nomSemestra='+nomSemestra);
                let nameSemestra="#isem"+nomSemestra;
                let index=this.options[this.selectedIndex].value;
                let s='';
                if (index>0) {
                    index--;
                    s=""+semclocks[index].clocks[0]+" "+semclocks[index].clocks[1]+" "+semclocks[index].clocks[2];
-//                   alert(s+' index='+index);
-//                   up.fillSemestryRecForDisc((index+1));
                    $(nameSemestra).val(s);
                    up.fillSemestryRecForDisc(nomSemestra,index);
+               } else {
+                   s="";
+                   $(nameSemestra).val(s);
+                   up.fillSemestryRecForDisc(nomSemestra,-1);
                }
 
                elem.removeChild(this);
                $(nameSemestra).toggleClass("active");
+               up.calculateClocksUsingSemestry();
+               $("#iclocklek").val(up.discRow.clocklek);
+               $("#iclocklab").val(up.discRow.clocklab);
+               $("#iclockpra").val(up.discRow.clockpra);
+               $("#iclockSam").val(up.discRow.clocksam);
         });
         if (elem) {
             elem.appendChild(select);
@@ -2083,9 +2168,9 @@ window.onload = function() {
            $("#selsem").remove();
            $(nameSemestra).toggleClass("active");
            ev.preventDefault();
+           ev.stopPropagation();
           return;
        }
-        let elem=ev.target;
 
         $("#blackwindow").toggle('active');
         $("#updatediscform").toggle('active');
