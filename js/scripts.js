@@ -1,13 +1,14 @@
 "use strict"
 let uplan = {
-    UGNP: { shifr: "09.00.00", name: "Информатика и выичслительная техника" },
+    UGNP: { shifr: "09.00.00", name: "Информатика и вычислительная техника" },
     napr: { shifr: "09.03.02", name: "Информационные системы и технологии" },
     profil: { shifr: ".03.02.02", name: "Информационные системы и технологии" },
     formaob: "Очная",
-    yearpost: "2018",
+    yearpost: 2018,
     okr: "Бакалавр",
-    srokob: "4",
-    kafedra: "Информационные и управляющих систем",
+    srokob: 4,
+    kafedra: "Информационных и управляющих систем",
+    amntofsemesters: 8,
     weekpersemestr: [17, 17, 17, 17, 17, 17, 14, 14],
     cycly: [{
             shifr: "Б1",
@@ -18,7 +19,7 @@ let uplan = {
                 disciplines: [{
                         shifr: "Б1.Б1",
                         name: "История",
-                        shifrkaf: "0",
+                        shifrkaf: 0,
                         ekzpersemestr: [2],
                         clocktot: 108,
                         ze: 3,
@@ -33,7 +34,7 @@ let uplan = {
                     {
                         shifr: "Б1.Б2",
                         name: "Философия",
-                        shifrkaf: "0",
+                        shifrkaf: 0,
                         ekzpersemestr: [4],
                         clocktot: 108,
                         ze: 3,
@@ -49,7 +50,7 @@ let uplan = {
                     {
                         shifr: "Б1.Б3",
                         name: "Иностранный язык",
-                        shifrkaf: "0",
+                        shifrkaf: 0,
                         ekzpersemestr: [4],
                         zachpersemestr: [1, 2, 3],
                         clocktot: 252,
@@ -86,7 +87,7 @@ let uplan = {
                         disciplines: [{
                                 shifr: "Б1.B1",
                                 name: "Русский язык и культура речи",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [3],
                                 clocktot: 108,
                                 ze: 3,
@@ -100,7 +101,7 @@ let uplan = {
                             {
                                 shifr: "Б1.B2",
                                 name: "Экономика",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [7],
                                 clocktot: 108,
                                 ze: 3,
@@ -115,7 +116,7 @@ let uplan = {
                             {
                                 shifr: "Б1.B3",
                                 name: "Управление IT проектами",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [8],
                                 clocktot: 144,
                                 ze: 4,
@@ -135,7 +136,7 @@ let uplan = {
                         disciplines: [{
                                 shifr: "Б1.ДВ1",
                                 name: "Политология",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [6],
                                 clocktot: 72,
                                 ze: 2,
@@ -150,7 +151,7 @@ let uplan = {
                             {
                                 shifr: "Б1.ДВ2",
                                 name: "Социология",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [6],
                                 clocktot: 72,
                                 ze: 2,
@@ -165,7 +166,7 @@ let uplan = {
                             {
                                 shifr: "Б1.ДВ3",
                                 name: "Профессиональный иностранный язык",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [5, 6, 7, 8],
                                 clocktot: 180,
                                 ze: 5,
@@ -188,7 +189,7 @@ let uplan = {
                             {
                                 shifr: "Б1.ДВ4",
                                 name: "Психология и педагогика",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [8],
                                 clocktot: 72,
                                 ze: 2,
@@ -203,7 +204,7 @@ let uplan = {
                             {
                                 shifr: "Б1.ДВ5",
                                 name: "Управление организациями и предприятиями",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [8],
                                 clocktot: 72,
                                 ze: 2,
@@ -233,7 +234,7 @@ let uplan = {
                 disciplines: [{
                     shifr: "Б2.Б1",
                     name: "Математический анализ",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     ekzpersemestr: [1, 2, 3],
                     indzpersemestr: [1, 2, 3],
                     clocktot: 324,
@@ -254,7 +255,7 @@ let uplan = {
                 }, {
                     shifr: "Б2.Б2",
                     name: "Алгебра и геометрия",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     ekzpersemestr: [1],
                     indzpersemestr: [1],
                     clocktot: 144,
@@ -269,7 +270,7 @@ let uplan = {
                 }, {
                     shifr: "Б2.Б3",
                     name: "Информатика",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     ekzpersemestr: [2],
                     zachpersemestr: [1],
                     indzpersemestr: [1, 2],
@@ -288,7 +289,7 @@ let uplan = {
                 }, {
                     shifr: "Б2.Б4",
                     name: "Физика",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     ekzpersemestr: [1, 2],
                     clocktot: 396,
                     ze: 11,
@@ -305,7 +306,7 @@ let uplan = {
                 }, {
                     shifr: "Б2.Б5",
                     name: "Теория вероятностей и математическая статистика",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [4],
                     indzpersemestr: [4],
                     clocktot: 108,
@@ -329,7 +330,7 @@ let uplan = {
                         disciplines: [{
                                 shifr: "Б2.B1",
                                 name: "Экология",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [1],
                                 clocktot: 72,
                                 ze: 2,
@@ -344,7 +345,7 @@ let uplan = {
                             {
                                 shifr: "Б2.B2",
                                 name: "Безопасность жизнедеятельности",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [7],
                                 clocktot: 108,
                                 ze: 3,
@@ -359,7 +360,7 @@ let uplan = {
                             {
                                 shifr: "Б2.B3",
                                 name: "Дискретная математика",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [2],
                                 indzpersemestr: [2],
                                 clocktot: 108,
@@ -375,7 +376,7 @@ let uplan = {
                             {
                                 shifr: "Б2.B4",
                                 name: "Численные методы",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 ekzpersemestr: [5],
                                 indzpersemestr: [5],
                                 clocktot: 108,
@@ -390,7 +391,7 @@ let uplan = {
                             }, {
                                 shifr: "Б2.B5",
                                 name: "Объектно-ориентированное программирование",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 ekzpersemestr: [3, 4],
                                 kursr: 4,
                                 clocktot: 252,
@@ -409,7 +410,7 @@ let uplan = {
                             {
                                 shifr: "Б2.B6",
                                 name: "Электроника и микросхемотехника",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [2],
                                 clocktot: 108,
                                 ze: 3,
@@ -429,7 +430,7 @@ let uplan = {
                         disciplines: [{
                                 shifr: "Б2.ДВ1",
                                 name: "Кроссплатформенное программирование",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 ekzpersemestr: [6],
                                 zachpersemestr: [5],
                                 clocktot: 252,
@@ -448,7 +449,7 @@ let uplan = {
                             {
                                 shifr: "Б2.ДВ2",
                                 name: "Моделирование информационных систем",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [3],
                                 clocktot: 108,
                                 ze: 3,
@@ -480,7 +481,7 @@ let uplan = {
                 disciplines: [{
                     shifr: "Б3.Б1",
                     name: "Базы данных",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     ekzpersemestr: [6],
                     zachpersemestr: [5],
                     indzpersemestr: [5, 6],
@@ -499,7 +500,7 @@ let uplan = {
                 }, {
                     shifr: "Б3.Б2",
                     name: "Компьютерная графика",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     ekzpersemestr: [4],
                     clocktot: 144,
                     ze: 4,
@@ -513,7 +514,7 @@ let uplan = {
                 }, {
                     shifr: "Б3.Б3",
                     name: "Информационные технологии",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     ekzpersemestr: [1],
                     clocktot: 144,
                     ze: 4,
@@ -527,7 +528,7 @@ let uplan = {
                 }, {
                     shifr: "Б3.Б4",
                     name: "Теория информации и кодирования",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [3],
                     clocktot: 144,
                     ze: 4,
@@ -541,7 +542,7 @@ let uplan = {
                 }, {
                     shifr: "Б3.Б5",
                     name: "Архитектура информационных систем и облачных технологий",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     ekzpersemestr: [6],
                     clocktot: 144,
                     ze: 4,
@@ -555,7 +556,7 @@ let uplan = {
                 }, {
                     shifr: "Б3.Б6",
                     name: "Технологии программирования",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     ekzpersemestr: [1, 2],
                     clocktot: 252,
                     ze: 7,
@@ -572,7 +573,7 @@ let uplan = {
                 }, {
                     shifr: "Б3.Б7",
                     name: "Технологии обработки информации",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     ekzpersemestr: [3],
                     clocktot: 144,
                     ze: 4,
@@ -586,7 +587,7 @@ let uplan = {
                 }, {
                     shifr: "Б3.Б8",
                     name: "Интеллектуальные системы и технологии",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     ekzpersemestr: [7],
                     clocktot: 144,
                     ze: 4,
@@ -600,7 +601,7 @@ let uplan = {
                 }, {
                     shifr: "Б3.Б9",
                     name: "Инструментальные средства информационных систем",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [4],
                     clocktot: 144,
                     ze: 4,
@@ -614,7 +615,7 @@ let uplan = {
                 }, {
                     shifr: "Б3.Б10",
                     name: "Методы и средства проектирования информационных систем и технологий",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     ekzpersemestr: [7],
                     clocktot: 144,
                     ze: 4,
@@ -628,7 +629,7 @@ let uplan = {
                 }, {
                     shifr: "Б3.Б11",
                     name: "Инфокоммуникационные системы и сети",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     ekzpersemestr: [4, 5],
                     kursr: 5,
                     clocktot: 216,
@@ -646,7 +647,7 @@ let uplan = {
                 }, {
                     shifr: "Б3.Б12",
                     name: "Надежность и диагностика информационных систем",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [7],
                     clocktot: 144,
                     ze: 4,
@@ -660,7 +661,7 @@ let uplan = {
                 }, {
                     shifr: "Б3.Б13",
                     name: "Введение в информационные системы",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [2],
                     clocktot: 108,
                     ze: 3,
@@ -674,7 +675,7 @@ let uplan = {
                 }, {
                     shifr: "Б3.Б14",
                     name: "Системный анализ",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [6],
                     clocktot: 108,
                     ze: 3,
@@ -697,7 +698,7 @@ let uplan = {
                         disciplines: [{
                                 shifr: "Б3.B1",
                                 name: "Технологии защиты информации",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 ekzpersemestr: [5],
                                 clocktot: 144,
                                 ze: 4,
@@ -712,7 +713,7 @@ let uplan = {
                             {
                                 shifr: "Б3.B2",
                                 name: "Информационные системы электронного документооборота",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 ekzpersemestr: [8],
                                 clocktot: 144,
                                 ze: 4,
@@ -727,7 +728,7 @@ let uplan = {
                             {
                                 shifr: "Б3.B3",
                                 name: "Разработка приложений для мобильных устройств",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 ekzpersemestr: [8],
                                 clocktot: 144,
                                 ze: 4,
@@ -742,7 +743,7 @@ let uplan = {
                             {
                                 shifr: "Б3.B4",
                                 name: "Операционные системы, среды и оболочки",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [4],
                                 clocktot: 144,
                                 ze: 4,
@@ -757,7 +758,7 @@ let uplan = {
                             {
                                 shifr: "Б3.B5",
                                 name: "Построение распределённых систем мониторинга",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 zachpersemestr: [7],
                                 clocktot: 108,
                                 ze: 3,
@@ -772,7 +773,7 @@ let uplan = {
                             {
                                 shifr: "Б3.B6",
                                 name: "Основы проектирования информационных микрокомпьютерных систем",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 ekzpersemestr: [7],
                                 clocktot: 144,
                                 ze: 4,
@@ -787,7 +788,7 @@ let uplan = {
                             {
                                 shifr: "Б3.B7",
                                 name: "Архитектура информационных компьютерных систем",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 ekzpersemestr: [3],
                                 clocktot: 144,
                                 ze: 4,
@@ -807,7 +808,7 @@ let uplan = {
                         disciplines: [{
                                 shifr: "Б3.ДВ1",
                                 name: "Интеллектуальные датчики",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 ekzpersemestr: [7],
                                 clocktot: 108,
                                 ze: 3,
@@ -822,7 +823,7 @@ let uplan = {
                             {
                                 shifr: "Б3.ДВ2",
                                 name: "Технологии компьютерного проектирования",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 ekzpersemestr: [5, 6],
                                 kursr: 6,
                                 clocktot: 252,
@@ -841,7 +842,7 @@ let uplan = {
                             {
                                 shifr: "Б3.ДВ3",
                                 name: "Web-программирование и web-дизайн",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 ekzpersemestr: [6],
                                 zachpersemestr: [5],
                                 kursp: 6,
@@ -861,7 +862,7 @@ let uplan = {
                             {
                                 shifr: "Б3.ДВ4",
                                 name: "Администрирование баз данных Oracle",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 ekzpersemestr: [8],
                                 clocktot: 144,
                                 ze: 4,
@@ -876,7 +877,7 @@ let uplan = {
                             {
                                 shifr: "Б3.ДВ5",
                                 name: "Прикладное программное обеспечение для управления предприятиями",
-                                shifrkaf: "0",
+                                shifrkaf: 0,
                                 ekzpersemestr: [8],
                                 kursr: 8,
                                 clocktot: 144,
@@ -906,7 +907,7 @@ let uplan = {
             disciplines: [{
                     shifr: "Б4.Б1",
                     name: "Учебная практика",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [4],
                     clocktot: 162,
                     ze: 4.5,
@@ -915,7 +916,7 @@ let uplan = {
                 {
                     shifr: "Б4.Б2",
                     name: "Производственная практика",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [6],
                     clocktot: 216,
                     ze: 6,
@@ -924,7 +925,7 @@ let uplan = {
                 {
                     shifr: "Б4.Б3",
                     name: "Преддипломная практика",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [8],
                     clocktot: 162,
                     ze: 4.5,
@@ -942,7 +943,7 @@ let uplan = {
             disciplines: [{
                     shifr: "Б5.Б1",
                     name: "Государственный экзамен",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     ekzpersemestr: [8],
                     clocktot: 54,
                     ze: 1.5,
@@ -951,7 +952,7 @@ let uplan = {
                 {
                     shifr: "Б5.Б2",
                     name: "Выпускная квалификационная работа бакалавра",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     clocktot: 270,
                     ze: 7.5,
                     clocksam: 270
@@ -968,7 +969,7 @@ let uplan = {
             disciplines: [{
                     shifr: "Б6.Б1",
                     name: "Физическая культура (Культура здоровья)",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [1],
                     clocktot: 72,
                     ze: 2,
@@ -983,7 +984,7 @@ let uplan = {
                 {
                     shifr: "Б6.Б2",
                     name: "Физическая культура",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [2, 4, 6],
                     clocktot: 328,
                     clockpra: 306,
@@ -1020,7 +1021,7 @@ let uplan = {
             disciplines: [{
                     shifr: "Б7.1",
                     name: "Современная теория управления",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [7],
                     clocktot: 72,
                     ze: 2,
@@ -1035,7 +1036,7 @@ let uplan = {
                 {
                     shifr: "Б7.2",
                     name: "Алгоритмы цифровой обработки аналоговых сигналов",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [4],
                     clocktot: 72,
                     ze: 2,
@@ -1050,7 +1051,7 @@ let uplan = {
                 {
                     shifr: "Б7.3",
                     name: "Украинский язык",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [4],
                     clocktot: 72,
                     ze: 2,
@@ -1064,7 +1065,7 @@ let uplan = {
                 {
                     shifr: "Б7.4",
                     name: "Классические регуляторы систем автоматического управления",
-                    shifrkaf: "0",
+                    shifrkaf: 0,
                     zachpersemestr: [5],
                     clocktot: 108,
                     ze: 3,
@@ -1086,7 +1087,61 @@ let uplan = {
     footer: {
         shifr: "#",
         name: "Всего за нормативный срок обучения"
-    }
+    },
+    clocksperweek:[],
+    nmbofkursp:[],
+    nmbofkursr:[],
+    nmbofindz:[],
+    nmbofekz:[],
+    nmbofzach:[],
+    nmbofze:[],
+    nmbofzeperyear:[],
+
+    praktics:[{
+               npp:1,
+               name:"Учебная практика",
+               nomsemestra:4,
+               nmbofweek:3.0,
+               ze:4.5
+           },
+           {
+               npp:2,
+               name:"Производственная практика",
+               nomsemestra:6,
+               nmbofweek:4.0,
+               ze:6.0
+           },
+           {
+               npp:3,
+               name:"Преддипломная практика",
+               nomsemestra:8,
+               nmbofweek:3.0,
+               ze:4.5
+           },
+    ],
+    gosattestaciya:[ {
+                npp:1,
+                orr:"Бакалавр",
+                name:"Государственный экзамен",
+                nomsemestra:8,
+                ze:1.5
+           },
+           {
+                npp:2,
+                orr:"Бакалавр",
+                name:"Выпускная квалификационная работа бакалавра",
+                nomsemestra:8,
+                ze:7.5
+           }
+    ],
+    podpisi:[
+         {dolg:"Заведующий кафедрой инофрмационных и управляющих систем ",
+          fio: "Горбунов А.И."},
+         {dolg:"Декан факультета компьютизированных систем и информационных технологий ",
+          fio: "Кочевский А.А."},
+         {dolg:"Директор департамента управления учебныи процессом ",
+          fio: "Серебряков А.И."},
+    ]
 }
 let semclocks = [{ id: 1, name: '0 0 1', clocks: [0, 0, 1] },
     { id: 2, name: '0 0 2', clocks: [0, 0, 2] },
@@ -1271,7 +1326,7 @@ class Up {
         $('#iclockpra').val(this.discRow.clockpra);
         $('#iclocksam').val(this.discRow.clocksam);
         j = 0;
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < this.uplan.amntofsemesters; i++) {
             n = '#isem' + (i + 1);
             s = '';
             if (this.discRow.semestry
@@ -1291,7 +1346,7 @@ class Up {
         let i, j;
         let s, id, arr;
         j = 0;
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < this.uplan.amntofsemesters; i++) {
             s = '#iekz' + (i + 1);
             $(s).prop('checked', false);
         }
@@ -1333,7 +1388,7 @@ class Up {
         this.discRow.clocksam = Number($('#iclocksam').val());
         j = 0;
         this.discRow.semestry = [];
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < this.uplan.amntofsemesters; i++) {
             n = '#isem' + (i + 1);
             s = $(n).val();
             if (s && s.trim().length == 5) {
@@ -1360,7 +1415,7 @@ class Up {
 
         arr = [];
         j = 0;
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < this.uplan.amntofsemesters; i++) {
             s = '#iekz' + (i + 1);
             n = $(s).prop('checked');
             if (n) {
@@ -1382,7 +1437,7 @@ class Up {
         let i, j, n;
         let s;
         j = 0;
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < this.uplan.amntofsemesters; i++) {
             s = '#iekz' + (i + 1);
             n = $(s).prop('checked');
             if (n) j++;
@@ -1606,7 +1661,7 @@ class Up {
             curre = 0;
             nomsemestra = disciplina.semestry[curre].nomsemestra;
         }
-        for (e = 0; e < 8; e++) {
+        for (e = 0; e < this.uplan.amntofsemesters; e++) {
             nameClass0 = " sem" + (e + 1) + 'lek';
             nameClass1 = " sem" + (e + 1) + 'lab';
             nameClass2 = " sem" + (e + 1) + 'pra';
@@ -1695,7 +1750,7 @@ class Up {
             this.addTd(tr, summaClockPra > 0 ? summaClockPra : "", 1, "center border-top border-left clockpra");
             this.addTd(tr, summaClockSam > 0 ? summaClockSam : "", 1, "center border-top border-left clocksam");
 
-            for (e = 0; e < 8; e++) {
+            for (e = 0; e < this.uplan.amntofsemesters; e++) {
                 semClassName = "sem" + (e + 1);
                 if (e < 7)
                     this.addTd(tr, summySem[e] > 0 ? summySem[e] : "", 3, "center border-top border-left " + semClassName);
@@ -1712,7 +1767,7 @@ class Up {
             footerLine.summaClockLab += summaClockLab;
             footerLine.summaClockPra += summaClockPra;
             footerLine.summaClockSam += summaClockSam;
-            for (e = 0; e < 8; e++)
+            for (e = 0; e < this.uplan.amntofsemesters; e++)
                 footerLine.summySem[e] += summySem[e];
         }
     } // end of makeCycleFooter(
@@ -1743,7 +1798,7 @@ class Up {
         this.addTd(tr, footerLine.summaClockLab > 0 ? footerLine.summaClockLab : "", 1, "center border-top border-left clocklab");
         this.addTd(tr, footerLine.summaClockPra > 0 ? footerLine.summaClockPra : "", 1, "center border-top border-left clockpra");
         this.addTd(tr, footerLine.summaClockSam > 0 ? footerLine.summaClockSam : "", 1, "center border-top border-left clocksam");
-        for (e = 0; e < 8; e++) {
+        for (e = 0; e < this.uplan.amntofsemesters; e++) {
             semClassName = 'sem' + (i + 1);
             this.addTd(tr, footerLine.summySem[e] > 0 ? footerLine.summySem[e] : "", 3, "center border-top border-left " + semClassName);
         }
@@ -1850,7 +1905,7 @@ class Up {
         $(rootSelector + ".clocklab").text(footerLine.summaClockLab);
         $(rootSelector + ".clockpra").text(footerLine.summaClockPra);
         $(rootSelector + ".clocksam").text(footerLine.summaClockSam);
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < this.uplan.amntofsemesters; i++) {
             val = "";
             j = i + 1;
             currSelector = rootSelector + ".sem" + j;
@@ -1884,7 +1939,7 @@ class Up {
         $(rootSelector + ".clocklab").text(footerLine.summaClockLab);
         $(rootSelector + ".clockpra").text(footerLine.summaClockPra);
         $(rootSelector + ".clocksam").text(footerLine.summaClockSam);
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < this.uplan.amntofsemesters; i++) {
             val = "";
             j = i + 1;
             currSelector = rootSelector + ".sem" + j;
@@ -1951,10 +2006,144 @@ class Up {
             }
         }
     } // end of makeUPlanLines;
+    makeInformPart() {
+        let tr = document.createElement("tr");
+        let praktics=[];
+        for (let i=0;i<5;i++) {
+            praktics.push({npp:0,name:"",nomsemestra:0,nmbofweek:0,ze:0});
+        }
+        if (this.uplan.praktics 
+            && Array.isArray(this.uplan.praktics)
+            && this.uplan.praktics.length>0){
+            for (let i=0;i<this.uplan.praktics.length;i++) {
+                if (i<5) {
+                   praktics[i].npp         = this.uplan.praktics[i].npp;
+                   praktics[i].name        = this.uplan.praktics[i].name;
+                   praktics[i].nomsemestra = this.uplan.praktics[i].nomsemestra;
+                   praktics[i].ze          = this.uplan.praktics[i].ze;
+               }
+             }
+
+        }
+        //    tr.dataset.fid=cycle.footer.fid;
+        tr.className = "planfooter";
+        tr.dataset.cid = 101;
+        this.addTd(tr, "Информационная часть", 51, " center");
+        this.body.appendChild(tr);
+        tr = document.createElement("tr");
+        this.addTd(tr,"Практики",17," center");
+        this.addTd(tr,"Учебные занятия (часов в неделю)",6,"");
+        for (let i=0;i<this.uplan.amntofsemesters;i++) {
+            this.addTd(tr,"30",3," center");
+        }
+        this.body.appendChild(tr);
+        tr = document.createElement("tr");
+        this.addTd(tr,"№",1," center");
+        this.addTd(tr,"Название",2," center");
+        this.addTd(tr,"Семестр",5," center");
+        this.addTd(tr,"Кол. недель",5," center");
+        this.addTd(tr,"ЗЕ",4," center");
+        this.addTd(tr,"Курсовые проекты",5,"");
+        this.addTd(tr,"1",1,"center");
+        for (let i=0;i<this.uplan.amntofsemesters;i++) {
+            this.addTd(tr,"30",3," center");
+        }
+        this.body.appendChild(tr);
+        for (let j=0;j<5;j++) {
+            tr = document.createElement("tr");
+            if (praktics[j].npp>0) {
+                 this.addTd(tr,praktics[j].npp,1," center");
+                 this.addTd(tr,praktics[j].name,2,"");
+                 this.addTd(tr,praktics[j].nomersemestra,5," center");
+                 this.addTd(tr,praktics[j].nmbofweek,5," center");
+                 this.addTd(tr,praktics[j].ze,4," center");
+            }
+            else {
+                 this.addTd(tr,"",1," center");
+                 this.addTd(tr,"",2," center");
+                 this.addTd(tr,"",5," center");
+                 this.addTd(tr,"",5," center");
+                 this.addTd(tr,"",4," center");
+            }
+            switch (j) {
+                case 0:
+                    this.addTd(tr,"Курсовые работы",5,"");
+                    this.addTd(tr,"1",1,"center");
+                    for (let i=0;i<this.uplan.amntofsemesters;i++) {
+                       this.addTd(tr,"30",3," center");
+                    }
+                    break;
+                case 1:
+                    this.addTd(tr,"Индивидуальные задания",5,"");
+                    this.addTd(tr,"1",1,"center");
+                    for (let i=0;i<this.uplan.amntofsemesters;i++) {
+                       this.addTd(tr,"30",3," center");
+                    }
+                    break;
+                case 2:
+                    this.addTd(tr,"Экзамены",5,"");
+                    this.addTd(tr,"1",1,"center");
+                    for (let i=0;i<this.uplan.amntofsemesters;i++) {
+                       this.addTd(tr,"30",3," center");
+                    }
+                    break;
+                case 3:
+                    this.addTd(tr,"Зачеты",5,"");
+                    this.addTd(tr,"1",1,"center");
+                    for (let i=0;i<this.uplan.amntofsemesters;i++) {
+                       this.addTd(tr,"30",3," center");
+                    }
+                    break;
+                case 4:
+                    this.addTd(tr,"ЗЕ",6,"");
+                    for (let i=0;i<this.uplan.amntofsemesters;i++) {
+                       this.addTd(tr,"30",3," center");
+                    }
+                    break;
+                default:
+                    // statements_def
+                    break;
+            }
+            this.body.appendChild(tr);
+        }
+        tr = document.createElement("tr");
+        this.addTd(tr,"Количество изучаемых дисциплин",8," right");
+        this.addTd(tr,"50",9," center");
+        this.addTd(tr,"ЗЕ за учебный год",6,"");
+        for (let i=0;i<this.uplan.amntofsemesters/2;i++) {
+            this.addTd(tr,"60",6," center");
+        }
+        this.body.appendChild(tr);
+        tr = document.createElement("tr");
+        tr.className = "planfooter";
+        tr.dataset.cid = 102;
+        this.addTd(tr, "ГОСУДАРСТВЕННАЯ АТТЕСТАЦИЯ", 51, " center");
+        this.body.appendChild(tr);
+        tr = document.createElement("tr");
+        this.addTd(tr,"№",1," center");
+        this.addTd(tr,"Программа подготовки",1," center");
+        this.addTd(tr,"Название",36," center");
+        this.addTd(tr,"Семестр",5," center");
+        this.addTd(tr,"ЗЕ",4," center");
+        this.body.appendChild(tr);
+        if (this.uplan.gosattestaciya 
+         && Array.isArray(this.uplan.gosattestaciya)
+         && this.uplan.gosattestaciya.length>0)
+            for (let i=0;i<this.uplan.gosattestaciya.length;i++) {
+                tr = document.createElement("tr");
+                this.addTd(tr,this.uplan.gosattestaciya[i].npp,1," center");
+                this.addTd(tr,this.uplan.gosattestaciya[i].orr,1,"");
+                this.addTd(tr,this.uplan.gosattestaciya[i].name,36,"");
+                this.addTd(tr,this.uplan.gosattestaciya[i].nomsemestra,5," center");
+                this.addTd(tr,this.uplan.gosattestaciya[i].ze,36," center");
+                this.body.appendChild(tr);
+            }
+    }
     showPlan() {
         this.makeUPlanMarking();
         this.makeUPlanLines();
         this.makePlanFooter();
+        this.makeInformPart();
     }
     fillSemestryRecForDisc(nomSemestra,index) {
         let i;
@@ -1991,6 +2180,7 @@ class Up {
             if (this.discRow.semestry.length>1)
                 this.discRow.semestry.sort((a, b) => a.nomsemestra - b.nomsemestra);
         }
+
     }
     createListForSemestrSelectOnScreen(nomSemestra,clocks) {
         let select=document.createElement('select');
@@ -2070,11 +2260,43 @@ class Up {
 
     }
 
+    insertUPlanIntoMDB() {
+//          return;
+          let apiKey="kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
+          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany?apiKey=kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
+//            $.ajax( { url: "https://api.mlab.com/api/1/databases/my-db/collections/my-coll?apiKey=myAPIKey",
+          loader.showWait('Загрузка учебного плана');
+          $.ajax( { url: fixedURL,
+          data: JSON.stringify( this.uplan ),
+          type: "POST",
+          contentType: "application/json" } )
+          .done(function() {
+             loader.hideWait();
+             loader.showFinished('План записан в БД');
+//             alert( "План сохранен" );
+          })
+          .fail(function( jqXHR, textStatus) {
+//            alert( "Ошибка сохранения плана "+ textStatus );
+             loader.showFinished('Ошибка сохранения плана+textStatus');
+          });
+    }
+
 } // Конец класса
 let up;
+// $(document).ready(
+//     $.fn.center = function () {
+//       this.css("position", "absolute");
+//       this.css("top", (($(window).height() - this.outerHeight()) / 2) + $(window).scrollTop() + "px");
+//       this.css("left", (($(window).width() - this.outerWidth()) / 2) + $(window).scrollLeft() + "px");
+//       return this;
+//     }
+//     );
 window.onload = function() {
     let body = document.querySelector("#planbody");
+
+
     up = new Up(uplan, body);
+//    up.insertUPlanIntoMDB();
     /* methods */
     /* actions */
     up.showPlan();
@@ -2160,7 +2382,7 @@ window.onload = function() {
 
     }
     $("#blackwindow,#closeform").click(function(ev) {
-       console.log('selsem len='+$("#selsem").length);
+//       console.log('selsem len='+$("#selsem").length);
        if ($("#selsem").length>0) {
            let nomSemestra=$("#selsem").attr("data-nomsemestra");;
            console.log('nomSemestra='+nomSemestra);
@@ -2252,4 +2474,14 @@ window.onload = function() {
           up.fillUpdateSelectSemestrClocks(nomSemestra);
        }
     });
+    $("#asidemenubtn,#asidemenuboxheader").click(function() {
+         $("#asidemenubox").toggleClass("active");
+    });
+
 }
+//mongodb://santono:ar1737@ds237445.mlab.com:37445/uplany
+//db.uplany.insert({ "foo" : "bar" })
+//  API key: kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf
+// https://api.mlab.com/api/1/databases?apiKey=kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf
+// List collections https://api.mlab.com/api/1/databases/my-db/collections?apiKey=myAPIKey
+// List documents https://api.mlab.com/api/1/databases/my-db/collections/my-coll?apiKey=myAPIKey

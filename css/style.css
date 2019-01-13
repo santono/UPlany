@@ -141,6 +141,7 @@
    td,
    th {
        border: 1px solid black;
+       vertical-align:middle;
    }
 
    /*
@@ -210,14 +211,15 @@
 
    .vertical {
        /*     -webkit-writing-mode: vertical-rl; */
-       writing-mode: vertical-rl;
+       /*writing-mode: vertical-rl;*/
        /*      -moz-writing-mode:sideways-lr; */
 
-       transform: rotate(180deg);
+       /*-moz-transform: rotate(180deg);*/
 
        /*      -webkit-transform: rotate(180deg); */
 
-       text-align: right;
+       /*-moz-text-align: right;*/
+       word-break:break-all;
    }
 
    .fillblack {
@@ -284,7 +286,9 @@
        left: 40vmax;
        top: 30vmin;
        font-family: Verdana, Tahoma, Arial;
-   }
+       -webkit-box-shadow: -3px 2px 9px rgba(88,88,88,0.52);
+       box-shadow: -3px 2px 9px black;
+      }
 
    #closeform,
    #closeformekz {
@@ -303,6 +307,9 @@
        border-radius: 0.33vmax;
        padding: 1vw;
        width: 100%;
+       -webkit-box-shadow: -3px 2px 9px rgba(88,88,88,0.52);
+       box-shadow: -3px 2px 9px black;
+   
    }
 
    .inputrow {
@@ -336,7 +343,80 @@
    #btnacceptekz:hover {
        background-color: lime;
    }
+   #asidemenubtn {
+    position:fixed;
+    top:1vmax;
+    left:1vmax;
+    z-index:50;
+    width:2vmax;
+    height:2vmax;
+    border:1px solid black;
+    border-radius:0.2vmax;
+    padding:0.1vmax;
+    cursor:pointer;
+   }
+   #asidemenubox {
+    position:fixed;
+    top:0px;
+    left:0px;
+    z-index:50;
+    width:25vw;
+    height:100vh;
+    background-color:rgb(235,235,235);
+    border:1px solid black;
+    border-radius:0.2vmax;
+    padding:0.1vmax;
+   -webkit-box-shadow: -3px 2px 9px rgba(88,88,88,0.52);
+    box-shadow: -3px 2px 9px black;
+    transform:translateX(-100%);
+   -webkit-transition: transform 0.5s ease-out 0.25s;
+    -moz-transition: transform 0.5s ease-out 0.25s;
+    -o-transition: transform 0.5s ease-out 0.25s;
+    transition: transform 0.5s ease-out 0.25s;    
+   }
+   #asidemenubox.active {
+    transform:translateX(0);
+   -webkit-transition: transform 0.5s ease-out 0.25s;
+    -moz-transition: transform 0.5s ease-out 0.25s;
+    -o-transition: transform 0.5s ease-out 0.25s;
+    transition: transform 0.5s ease-out 0.25s;    
 
+   }
+   #asidemenuboxheader {
+
+      position:absolute;
+      right:0.1vmax;
+      top:0.25vmax;
+      height:1.5vmax;
+      width:1.5vmax;
+      cursor:pointer;
+   }
+   #asidemenuboxcontent {
+     position:absolute;
+     top:2vmax;
+   }
+   #asidemenubtnwrapper {
+    width:20vw;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-content:center;
+    align-items:center;
+   }
+   .menubtn {
+    height:10vmin;
+   /* line-height:5vmin;*/
+    padding:6% 0;
+    width:20vw;
+    margin-top:1vw;
+    margin-left:1vw;
+    border:1px solid black;
+    border-radius:0.5vmin;
+    cursor:pointer;
+   }
+   .menubtn:hover {
+     background-color:rgb(200,200,200);
+   }
    /*
     table {
       width:100vw;
