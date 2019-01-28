@@ -27,6 +27,8 @@ menugetplan=(function(conf) {
                         convertToHierarchyMenu(ul,data.childrens[i]);
                    }
                    li.appendChild(ul);  
+                } else {
+                  a.dataset.id=data.id;
                 }
 //                console.log(root);
                 root.appendChild(li);
@@ -62,7 +64,7 @@ menugetplan=(function(conf) {
           })
           .done(function(data) {
              loader.hideWait();
-             loader.showFinished('Список прочтен из БД');
+//             loader.showFinished('Список прочтен из БД');
              self.buildDOM(conf,data);
           })
           .fail(function( jqXHR, textStatus) {

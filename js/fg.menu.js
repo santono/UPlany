@@ -21,11 +21,11 @@ $.fn.menu = function(options){
 	
 	$(this)
 	.on("mousedown",function(){
-		console.log('mousedown');
+//		console.log('mousedown');
 		if (!m.menuOpen) { m.showLoading(); };
 	})	
 	.on("click",function(){
-		console.log('click');
+//		console.log('click');
 		if (m.menuOpen == false) { m.showMenu(); }
 		else { m.kill(); };
 		return false;
@@ -45,7 +45,7 @@ function Menu(caller, options){
 	
 	var options = jQuery.extend({
 		content: null,
-		width: 180, // width of menu container, must be set or passed in to calculate widths of child menus
+		width: "50vmax", // width of menu container, must be set or passed in to calculate widths of child menus
 		maxHeight: 180, // max height of menu (if a drilldown: height does not include breadcrumb)
 		positionOpts: {
 			posX: 'left', 
@@ -72,7 +72,8 @@ function Menu(caller, options){
 		flyOutOnState: 'ui-state-default',
 		nextMenuLink: 'ui-icon-triangle-1-e', // class to style the link (specifically, a span within the link) used in the multi-level menu to show the next level
 		topLinkText: 'All',
-		nextCrumbLink: 'ui-icon-carat-1-e'	
+		nextCrumbLink: 'ui-icon-carat-1-e',
+		selectCallback:null	
 	}, options);
 	
 	var killAllMenus = function(){
@@ -201,8 +202,8 @@ function Menu(caller, options){
 	};
 	
 	this.create = function(){	
-		console.log(' in create');
-		console.log(container);
+//		console.log(' in create');
+//		console.log(container);
 		container.css({ width: options.width }).appendTo('body').find('ul:first').not('.fg-menu-breadcrumb').addClass('fg-menu');
 		container.find('ul, li a').addClass('ui-corner-all');
 		
@@ -250,18 +251,21 @@ function Menu(caller, options){
 				mouseleave:function(){ $(this).removeClass(options.linkHoverSecondary); }
 			});
 		};	
-		console.log('before setPosition ');
-    console.log(container);
+//		console.log('before setPosition ');
+//    console.log(container);
 		menu.setPosition(container, caller, options);
 		menu.menuExists = true;
 	};
 	
 	this.chooseItem = function(item){
-		console.log('chooseItem');
+//		console.log('chooseItem');
 		menu.kill();
 		// edit this for your own custom function/callback:
-		$('#menuSelection').text($(item).text());	
-		location.href = $(item).attr('href');
+//		$('#menuSelection').text($(item).text());	
+//		location.href = $(item).attr('href');
+//		alert("selected id="+$(item).attr('data-id'));
+		let id=$(item).attr('data-id');
+		conf.selectCallback.call(window.up,id)
 	};
 };
 

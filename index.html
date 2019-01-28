@@ -11,8 +11,12 @@
 </head>
 
 <body>
+    <!--
+                <a tabindex="0" href="#userselectplan" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="loadbtn"><span class="ui-icon ui-icon-triangle-1-s"></span>Выбор плана</a>
+                <div id="userselectplan" class="hidden"></div>
+    -->
     <table cellspacing=0>
-        <thead>
+        <thead id="idplanhat">
             <tr>
                 <th class="center border-top border-bottom border-left border-right" colspan=51>2018-2019 уч.г.</th>
             </tr>
@@ -104,7 +108,7 @@
                 <th colspan="4">4</th>
                 <th>5</th>
                 <th>6</th>
-                <th colspan="4s">7</th>
+                <th colspan="4">7</th>
                 <th>8</th>
                 <th>8.1</th>
                 <th>9</th>
@@ -319,19 +323,22 @@
 <!--
                 <div class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="loadbtn"><span class="ui-icon ui-icon-triangle-1-s"></span>Прочитать план из БД</div>
 -->
-                <a tabindex="0" href="#userselectplan" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="loadbtn"><span class="ui-icon ui-icon-triangle-1-s"></span>Выбор плана</a>
-                <div id="userselectplan" class="hidden"></div>
-                <div class="menubtn" id="savebtn">Записать план в БД</div>
-                <div class="menubtn" id="testbtn">Тестировать план</div>
-            </div>
+
+            <a tabindex="0" href="#userselectplan" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="loadbtn"><span class="ui-icon ui-icon-triangle-1-s"></span>Выбор плана</a>
+            <div id="userselectplan" class="hidden"></div>
+
+            <div class="menubtn" id="savebtn">Записать план в БД</div>
+            <div class="menubtn" id="testbtn">Тестировать план</div>
         </div>
     </div>
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/jquery-migrate-3.0.1.js"></script>
-    <script src="js/fg.menu.js"></script>
-    <script src="js/scripts.js"></script>
-    <script src="js/loader.js"></script>
-    <script src="js/menugetplan.js"></script>
+</div>
+<script src="js/jquery-3.3.1.min.js"> </script>
+<script src="js/jquery-migrate-3.0.1.js"> </script>
+<script src="js/fg.menu.js">          </script>
+<script src="js/planyhats.js">        </script>
+<script src="js/scripts.js">          </script>
+<script src="js/loader.js">           </script>
+<script src="js/menugetplan.js">      </script>
 </body>
 
 </html>

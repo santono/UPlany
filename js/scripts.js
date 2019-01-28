@@ -1867,7 +1867,7 @@ class Up {
         $(rootSelector + ".clocklab").text(this.discRow.clocklab>0?this.discRow.clocklab:"");
         $(rootSelector + ".clockpra").text(this.discRow.clockpra>0?this.discRow.clockpra:"");
         $(rootSelector + ".clocksam").text(this.discRow.clocksam>0?this.discRow.clocksam:"");
-        for (i=0;i<8;i++) {
+        for (i=0;i<this.uplan.amntofsemesters;i++) {
              nameSem=".sem"+(i+1)+"lek";
              $(rootSelector + nameSem).text("");
              nameSem=".sem"+(i+1)+"lab";
@@ -2023,6 +2023,18 @@ class Up {
             }
         }
     } // end of makeUPlanLines;
+    makeUPlanHat() {
+        let planHat=hat(1);
+        console.log(planHat);
+        $("#idplanhat").empty();
+        let el=document.querySelector("#idplanhat");
+        el.innerHTML=planHat;
+        console.log($("#idplanhat").html());
+//        $("#idplanhat").html(planHat);
+//        $(planHat).appendTo("#idplanhat");
+//        console.log($("#idplanhat").html());
+
+    }
     makeInformPart() {
         let tr = document.createElement("tr");
         let praktics=[];
@@ -2158,6 +2170,7 @@ class Up {
     }
     showPlan() {
         this.makeUPlanMarking();
+        this.makeUPlanHat();
         this.makeUPlanLines();
         this.makePlanFooter();
         this.makeInformPart();
@@ -2297,6 +2310,31 @@ class Up {
              loader.showFinished('Ошибка сохранения плана+textStatus');
           });
     }
+    getUPlanFromMDB(id) {
+          let apiKey="kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
+          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany?";
+          let q='q={"_id": "'+id+'" }}';
+          let URL=fixedURL+q+"&"+f+"&apiKey="+apiKey;
+          let self=this;
+          loader.showWait('Чтение учебного плана');
+          $.ajax( { url: URL,
+          type: "GET"
+           })
+          .done(function(data) {
+             loader.hideWait();
+             let iplan=JSON.parse(data);
+             winodw.ip=iplan;
+             self.showPlan(iplan);
+//             loader.showFinished('Список прочтен из БД');
+          })
+          .fail(function( jqXHR, textStatus) {
+//            alert( "Ошибка сохранения плана "+ textStatus );
+             loader.hideWait();
+             loader.showFinished('Ошибка чтения списка планов'+textStatus);
+          });
+
+
+    }
     selectUPlanFromMDB() {
 //          return;
           let apiKey="kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
@@ -2318,7 +2356,7 @@ class Up {
           .done(function(data) {
              loader.hideWait();
              loader.showFinished('Список прочтен из БД');
-             console.log(data);
+//             console.log(data);
 //             alert( "План сохранен" );
           })
           .fail(function( jqXHR, textStatus) {
@@ -2357,7 +2395,9 @@ $(".selector").on({
    $('#loadbtn').menu({ content: $('#loadbtn').next().html(), 
                         backLink: true,
                         crumbDefaultText: ' ',
-                        flyOut: true });
+                        flyOut: true,
+                        width:"20vmax",
+                        selectCallback:up.getUPlanFromMDB});
 }
 window.onload = function() {
     let body = document.querySelector("#planbody");

@@ -42,6 +42,7 @@ loader=(function() {
                 .css('width', '30vmax')
 //                .center()
                 .css('position','fixed')
+                .css('opacity','0.5')
                 .css('left','35vmax')
                 .css('top','35vmin')
                 .css('box-shadow','9px 12px 8px 1px black')
