@@ -275,6 +275,9 @@
        left: 10vmax;
        top: 10vmin;
        font-family: Verdana, Tahoma, Arial;
+       box-shadow:9px 12px 8px 1px black;
+       -webkit-box-shadow:9px 12px 8px 1px black;
+       -moz-box-shadow:9px 12px 8px 1px black;
    }
 
    #updateekzform {
@@ -366,8 +369,9 @@
     border:1px solid black;
     border-radius:0.2vmax;
     padding:0.1vmax;
-   -webkit-box-shadow: -3px 2px 9px rgba(88,88,88,0.52);
-    box-shadow: -3px 2px 9px black;
+    box-shadow:9px 12px 8px 1px rgba(130,120,120,0.48);
+    -webkit-box-shadow:9px 12px 8px 1px rgba(130,120,120,0.48);
+    -moz-box-shadow:9px 12px 8px 1px rgba(130,120,120,0.48);
     transform:translateX(-100%);
    -webkit-transition: transform 0.5s ease-out 0.25s;
     -moz-transition: transform 0.5s ease-out 0.25s;
@@ -417,6 +421,42 @@
    .menubtn:hover {
      background-color:rgb(200,200,200);
    }
+   #userselectplan {
+      
+/*    
+       height:80vh;
+       width:80vw;
+       position:fixed;
+       top:10vh;
+       left:10vw;
+       border:1px solid black;
+       border-radius:0.5vmin;
+      -webkit-box-shadow: -3px 2px 9px rgba(88,88,88,0.52);
+       box-shadow: -3px 2px 9px black;
+       overflow:auto; 
+       z-index:500;
+       background-color: rgba(128,128,128,1);
+       color: white;
+*/       
+   }
+/* fg-menu */
+  #menuLog { font-size:1.4em; margin:20px; }
+  .hidden { position:absolute; top:0; left:-9999px; width:1px; height:1px; overflow:hidden; }
+  
+  .fg-button { clear:left; margin:0 4px 40px 20px; padding: .4em 1em; text-decoration:none !important; cursor:pointer; position: relative; text-align: center; zoom: 1; }
+  .fg-button .ui-icon { position: absolute; top: 50%; margin-top: -8px; left: 50%; margin-left: -8px; }
+  a.fg-button { float:left;  }
+  button.fg-button { width:auto; overflow:visible; } /* removes extra button width in IE */
+  
+  .fg-button-icon-left { padding-left: 2.1em; }
+  .fg-button-icon-right { padding-right: 2.1em; }
+  .fg-button-icon-left .ui-icon { right: auto; left: .2em; margin-left: 0; }
+  .fg-button-icon-right .ui-icon { left: auto; right: .2em; margin-left: 0; }
+  .fg-button-icon-solo { display:block; width:8px; text-indent: -9999px; }   /* solo icon buttons must have block properties for the text-indent to work */ 
+  
+  .fg-button.ui-state-loading .ui-icon { background: url(spinner_bar.gif) no-repeat 0 0; }
+/* end of fg-menu */
+
    /*
     table {
       width:100vw;

@@ -15,6 +15,9 @@ loader=(function() {
                 .css('position','fixed')
                 .css('left','35vmax')
                 .css('top','35vmin')
+                .css('box-shadow','9px 12px 8px 1px black')
+                .css('-webkit-box-shadow','9px 12px 8px 1px black')
+                .css('-moz-box-shadow','9px 12px 8px 1px black')
 //                .center()
 //                .css('margin','0 auto')
                 .hide(); // изначально скрываем сообщение
@@ -41,6 +44,9 @@ loader=(function() {
                 .css('position','fixed')
                 .css('left','35vmax')
                 .css('top','35vmin')
+                .css('box-shadow','9px 12px 8px 1px black')
+                .css('-webkit-box-shadow','9px 12px 8px 1px black')
+                .css('-moz-box-shadow','9px 12px 8px 1px black')
 //                .css('margin','0 auto')
                 .hide(); // изначально скрываем сообщение
 

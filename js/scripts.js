@@ -1121,14 +1121,14 @@ let uplan = {
     ],
     gosattestaciya:[ {
                 npp:1,
-                orr:"Бакалавр",
+                okr:"Бакалавр",
                 name:"Государственный экзамен",
                 nomsemestra:8,
                 ze:1.5
            },
            {
                 npp:2,
-                orr:"Бакалавр",
+                okr:"Бакалавр",
                 name:"Выпускная квалификационная работа бакалавра",
                 nomsemestra:8,
                 ze:7.5
@@ -1154,6 +1154,22 @@ let semclocks = [{ id: 1, name: '0 0 1', clocks: [0, 0, 1] },
     { id: 9, name: '2 0 3', clocks: [2, 0, 3] },
     { id: 10, name: '2 3 0', clocks: [2, 3, 0] }
 ];
+class User{
+    constructor (name,rights,shifrKaf) {
+        this.name     = name;
+        this.rights   = rights;
+        this.shifrKaf = shifrKaf;
+    }
+    getName() {
+        return this.name;
+    }
+    getRights() {
+        return this.rights;
+    }
+    getShifrKaf() {
+        return this.shifrKaf;
+    }
+}
 class Up {
     constructor(uplanouter, bodyfinded) {
         this.disciplina   = null;
@@ -1741,21 +1757,22 @@ class Up {
             tr = document.createElement("tr");
             tr.dataset.fid = cycle.footer.fid;
             tr.className = "cyclefooter";
-            this.addTd(tr, cycle.footer.shifr, 1, "border-top border-left cyclefooter")
-            this.addTd(tr, cycle.footer.name, 16, "border-top border-left cyclefooter")
-            this.addTd(tr, summaClockTot, 1, "center border-top border-left clocktot");
-            this.addTd(tr, summaZE, 1, "center border-top border-left clockze");
-            this.addTd(tr, summaClockLek > 0 ? summaClockLek : "", 1, "center border-top border-left clocklek");
-            this.addTd(tr, summaClockLab > 0 ? summaClockLab : "", 1, "center border-top border-left clocklab");
-            this.addTd(tr, summaClockPra > 0 ? summaClockPra : "", 1, "center border-top border-left clockpra");
-            this.addTd(tr, summaClockSam > 0 ? summaClockSam : "", 1, "center border-top border-left clocksam");
+            this.addTd(tr, cycle.footer.shifr, 1, " cyclefooter")
+            this.addTd(tr, cycle.footer.name, 16, " cyclefooter")
+            this.addTd(tr, summaClockTot, 1, " clocktot");
+            this.addTd(tr, summaZE, 1, " center clockze");
+            this.addTd(tr, summaClockLek > 0 ? summaClockLek : "", 1, "center clocklek");
+            this.addTd(tr, summaClockLab > 0 ? summaClockLab : "", 1, "center clocklab");
+            this.addTd(tr, summaClockPra > 0 ? summaClockPra : "", 1, "center clockpra");
+            this.addTd(tr, summaClockSam > 0 ? summaClockSam : "", 1, "center clocksam");
 
             for (e = 0; e < this.uplan.amntofsemesters; e++) {
                 semClassName = "sem" + (e + 1);
                 if (e < 7)
-                    this.addTd(tr, summySem[e] > 0 ? summySem[e] : "", 3, "center border-top border-left " + semClassName);
+                    this.addTd(tr, summySem[e] > 0 ? summySem[e] : "", 3, " center " + semClassName);
                 else
-                    this.addTd(tr, summySem[e] > 0 ? summySem[e] : "", 3, "center border-top border-left border-right " + semClassName);
+//                    this.addTd(tr, summySem[e] > 0 ? summySem[e] : "", 3, "center border-top border-left border-right " + semClassName);
+                    this.addTd(tr, summySem[e] > 0 ? summySem[e] : "", 3, " center " + semClassName);
             }
             this.body.appendChild(tr);
         } else
@@ -1790,17 +1807,17 @@ class Up {
         tr = document.createElement("tr");
         //    tr.dataset.fid=cycle.footer.fid;
         tr.className = "planfooter";
-        this.addTd(tr, this.uplan.footer.shifr, 1, "border-top border-left")
-        this.addTd(tr, this.uplan.footer.name, 16, "border-top border-left")
-        this.addTd(tr, footerLine.summaClockTot, 1, "center border-top border-left clocktot");
-        this.addTd(tr, footerLine.summaZE, 1, "center border-top border-left clockze");
-        this.addTd(tr, footerLine.summaClockLek > 0 ? footerLine.summaClockLek : "", 1, "center border-top border-left clocklek");
-        this.addTd(tr, footerLine.summaClockLab > 0 ? footerLine.summaClockLab : "", 1, "center border-top border-left clocklab");
-        this.addTd(tr, footerLine.summaClockPra > 0 ? footerLine.summaClockPra : "", 1, "center border-top border-left clockpra");
-        this.addTd(tr, footerLine.summaClockSam > 0 ? footerLine.summaClockSam : "", 1, "center border-top border-left clocksam");
+        this.addTd(tr, this.uplan.footer.shifr, 1, "")
+        this.addTd(tr, this.uplan.footer.name, 16, "")
+        this.addTd(tr, footerLine.summaClockTot, 1, "center clocktot");
+        this.addTd(tr, footerLine.summaZE, 1, "center clockze");
+        this.addTd(tr, footerLine.summaClockLek > 0 ? footerLine.summaClockLek : "", 1, "center clocklek");
+        this.addTd(tr, footerLine.summaClockLab > 0 ? footerLine.summaClockLab : "", 1, "center clocklab");
+        this.addTd(tr, footerLine.summaClockPra > 0 ? footerLine.summaClockPra : "", 1, "center clockpra");
+        this.addTd(tr, footerLine.summaClockSam > 0 ? footerLine.summaClockSam : "", 1, "center clocksam");
         for (e = 0; e < this.uplan.amntofsemesters; e++) {
             semClassName = 'sem' + (i + 1);
-            this.addTd(tr, footerLine.summySem[e] > 0 ? footerLine.summySem[e] : "", 3, "center border-top border-left " + semClassName);
+            this.addTd(tr, footerLine.summySem[e] > 0 ? footerLine.summySem[e] : "", 3, "center " + semClassName);
         }
         this.body.appendChild(tr);
 
@@ -2132,7 +2149,7 @@ class Up {
             for (let i=0;i<this.uplan.gosattestaciya.length;i++) {
                 tr = document.createElement("tr");
                 this.addTd(tr,this.uplan.gosattestaciya[i].npp,1," center");
-                this.addTd(tr,this.uplan.gosattestaciya[i].orr,1,"");
+                this.addTd(tr,this.uplan.gosattestaciya[i].okr,1,"");
                 this.addTd(tr,this.uplan.gosattestaciya[i].name,36,"");
                 this.addTd(tr,this.uplan.gosattestaciya[i].nomsemestra,5," center");
                 this.addTd(tr,this.uplan.gosattestaciya[i].ze,36," center");
@@ -2280,9 +2297,40 @@ class Up {
              loader.showFinished('Ошибка сохранения плана+textStatus');
           });
     }
+    selectUPlanFromMDB() {
+//          return;
+          let apiKey="kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
+//          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany?apiKey=kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
+//          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany?q={"active": true}&f={"firstName": 1, "lastName": 1}&c=true&apiKey=";
+          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany?";
+//          let q='q={"napr.shifr": "09.03.02";
+          let q='q={"napr.shifr": {$in: ["09.03.02","09.04.02"]}}';
+  //        status: { $in: [ "A", "D" ] }}';
+          let f='f={"napr.name": 1, "yearpost": 1, "formaob":1,"okr":1}';
+//            $.ajax( { url: "https://api.mlab.com/api/1/databases/my-db/collections/my-coll?apiKey=myAPIKey",
+          let URL=fixedURL+q+"&"+f+"&apiKey="+apiKey;
+          loader.showWait('Чтение списка учебных планов');
+          $.ajax( { url: URL,
+     //     data: JSON.stringify( this.uplan ),
+          type: "GET"
+      //    contentType: "application/json" }
+           })
+          .done(function(data) {
+             loader.hideWait();
+             loader.showFinished('Список прочтен из БД');
+             console.log(data);
+//             alert( "План сохранен" );
+          })
+          .fail(function( jqXHR, textStatus) {
+//            alert( "Ошибка сохранения плана "+ textStatus );
+             loader.hideWait();
+             loader.showFinished('Ошибка чтения списка планов'+textStatus);
+          });
+    }
 
 } // Конец класса
 let up;
+let user;
 // $(document).ready(
 //     $.fn.center = function () {
 //       this.css("position", "absolute");
@@ -2291,12 +2339,33 @@ let up;
 //       return this;
 //     }
 //     );
+function finishMenu() {
+//    console.log($('#userselectplan').html());
+$(".selector").on({
+    mouseenter: function () {
+        //stuff to do on mouse enter
+    },
+    mouseleave: function () {
+        //stuff to do on mouse leave
+    }
+});
+  $('.fg-button').on({
+     mouseenter: function(){ $(this).removeClass('ui-state-default').addClass('ui-state-focus'); },
+     mouseleave: function(){ $(this).removeClass('ui-state-focus').addClass('ui-state-default'); }
+   });
+
+   $('#loadbtn').menu({ content: $('#loadbtn').next().html(), 
+                        backLink: true,
+                        crumbDefaultText: ' ',
+                        flyOut: true });
+}
 window.onload = function() {
     let body = document.querySelector("#planbody");
-
-
+    user= new User("Ромашка Е.В.","usekretar",95);
+    menugetplan({user:user,rootElement:"#userselectplan",callback:finishMenu});
     up = new Up(uplan, body);
 //    up.insertUPlanIntoMDB();
+//    up.selectUPlanFromMDB();
     /* methods */
     /* actions */
     up.showPlan();
@@ -2314,7 +2383,6 @@ window.onload = function() {
                         if (up.discRow) {
                             up.saveDiscRow();
                             up.fillUpdateDiscForm();
-
                         }
                     }
                     $("#blackwindow").toggle('active');
@@ -2381,7 +2449,7 @@ window.onload = function() {
         }
 
     }
-    $("#blackwindow,#closeform").click(function(ev) {
+    $("#blackwindow,#closeform").on("click",function(ev) {
 //       console.log('selsem len='+$("#selsem").length);
        if ($("#selsem").length>0) {
            let nomSemestra=$("#selsem").attr("data-nomsemestra");;
@@ -2397,7 +2465,7 @@ window.onload = function() {
         $("#blackwindow").toggle('active');
         $("#updatediscform").toggle('active');
     });
-    $("#blackwindowekz,#closeformekz").click(function() {
+    $("#blackwindowekz,#closeformekz").on("click",function() {
         $("#blackwindowekz").toggle('active');
         $("#updateekzform").toggle('active');
     });
@@ -2417,8 +2485,8 @@ window.onload = function() {
             $("#updatediscform").toggle('active');
         }
     };
-    $("#btnaccept").click(clickHandler);
-    $("#btnacceptekz").click(function(ev) {
+    $("#btnaccept").on("click",clickHandler);
+    $("#btnacceptekz").on("click",function(ev) {
         let mode;
         ev.preventDefault();
         ev.stopPropagation();
@@ -2440,25 +2508,25 @@ window.onload = function() {
         }
 
     });
-    $("#iekz").click(function() {
+    $("#iekz").on("click",function() {
         up.fillUpdateEkzForm('ekz');
         $("#modesrc").val('form');
         $("#blackwindowekz").toggle('active');
         $("#updateekzform").toggle('active');
     });
-    $("#izach").click(function() {
+    $("#izach").on("click",function() {
         up.fillUpdateEkzForm('zach');
         $("#modesrc").val('form');
         $("#blackwindowekz").toggle('active');
         $("#updateekzform").toggle('active');
     });
-    $("#iindz").click(function() {
+    $("#iindz").on("click",function() {
         up.fillUpdateEkzForm('indz');
         $("#modesrc").val('form');
         $("#blackwindowekz").toggle('active');
         $("#updateekzform").toggle('active');
     });
-    $("#isem1b,#isem2b,#isem3b,#isem4b,#isem5b,#isem6b,#isem7b,#isem8b").click(function(ev){
+    $("#isem1b,#isem2b,#isem3b,#isem4b,#isem5b,#isem6b,#isem7b,#isem8b").on("click",function(ev){
        let semnames=["isem1","isem2","isem3","isem4","isem5","isem6","isem7","isem8"];
        let i;
        if ($("#selsem").length>0)
@@ -2474,7 +2542,7 @@ window.onload = function() {
           up.fillUpdateSelectSemestrClocks(nomSemestra);
        }
     });
-    $("#asidemenubtn,#asidemenuboxheader").click(function() {
+    $("#asidemenubtn,#asidemenuboxheader").on("click",function() {
          $("#asidemenubox").toggleClass("active");
     });
 

@@ -1,9 +1,13 @@
+<!DOCTYPE html>
 <html lang="ru">
 
 <head>
     <meta charset="utf-8">
+    <title>Учебные планы </title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/flex.css">
+    <link rel="stylesheet" href="css/fg.menu.css" media="screen" />
+    <link rel="stylesheet" href="css/theme/ui.all.css" media="screen" />
 </head>
 
 <body>
@@ -312,15 +316,22 @@
         </div>
         <div id="asidemenuboxcontent">
             <div id="asidemenubtnwrapper">
-                <div class="menubtn" id="loadbtn">Прочитать план из БД</div>
+<!--
+                <div class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="loadbtn"><span class="ui-icon ui-icon-triangle-1-s"></span>Прочитать план из БД</div>
+-->
+                <a tabindex="0" href="#userselectplan" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="loadbtn"><span class="ui-icon ui-icon-triangle-1-s"></span>Выбор плана</a>
+                <div id="userselectplan" class="hidden"></div>
                 <div class="menubtn" id="savebtn">Записать план в БД</div>
                 <div class="menubtn" id="testbtn">Тестировать план</div>
             </div>
         </div>
     </div>
     <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.js"></script>
+    <script src="js/fg.menu.js"></script>
     <script src="js/scripts.js"></script>
     <script src="js/loader.js"></script>
+    <script src="js/menugetplan.js"></script>
 </body>
 
 </html>
