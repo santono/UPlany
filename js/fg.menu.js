@@ -21,11 +21,9 @@ $.fn.menu = function(options){
 	
 	$(this)
 	.on("mousedown",function(){
-//		console.log('mousedown');
 		if (!m.menuOpen) { m.showLoading(); };
 	})	
 	.on("click",function(){
-//		console.log('click');
 		if (m.menuOpen == false) { m.showMenu(); }
 		else { m.kill(); };
 		return false;
@@ -36,10 +34,6 @@ function Menu(caller, options){
 	var menu = this;
 	var caller = $(caller);
 	var container = $('<div class="fg-menu-container ui-widget ui-widget-content ui-corner-all">'+options.content+'</div>');
-	//console.log('inittial container');
-//	console.log(container);
-//	console.log('inittial content');
-//	console.log(options.content);
 	this.menuOpen = false;
 	this.menuExists = false;
 	
@@ -103,13 +97,10 @@ function Menu(caller, options){
 	};
 
 	this.showMenu = function(){
-//		console.log('showMenu');
 		killAllMenus();
 		if (!menu.menuExists) {
-//		 console.log('before create');
 		 menu.create() 
 		};
-		console.log('create passed');
 		caller
 			.addClass('fg-menu-open')
 			.addClass(options.callerOnState);
@@ -202,8 +193,6 @@ function Menu(caller, options){
 	};
 	
 	this.create = function(){	
-//		console.log(' in create');
-//		console.log(container);
 		container.css({ width: options.width }).appendTo('body').find('ul:first').not('.fg-menu-breadcrumb').addClass('fg-menu');
 		container.find('ul, li a').addClass('ui-corner-all');
 		
@@ -212,9 +201,6 @@ function Menu(caller, options){
 		container.find('li').attr('role', 'menuitem');
 		container.find('li:has(ul)').attr('aria-haspopup', 'true').find('ul').attr('aria-expanded', 'false');
 		container.find('a').attr('tabindex', '-1');
-//		console.log('before size()');
-//		console.log(container);
-		console.log(container.find('ul'));
 		// when there are multiple levels of hierarchy, create flyout or drilldown menu
 		if (container.find('ul').length > 1) {
 			if (options.flyOut) { menu.flyout(container, options); }
@@ -251,21 +237,20 @@ function Menu(caller, options){
 				mouseleave:function(){ $(this).removeClass(options.linkHoverSecondary); }
 			});
 		};	
-//		console.log('before setPosition ');
-//    console.log(container);
 		menu.setPosition(container, caller, options);
 		menu.menuExists = true;
 	};
 	
 	this.chooseItem = function(item){
-//		console.log('chooseItem');
 		menu.kill();
 		// edit this for your own custom function/callback:
 //		$('#menuSelection').text($(item).text());	
 //		location.href = $(item).attr('href');
 //		alert("selected id="+$(item).attr('data-id'));
 		let id=$(item).attr('data-id');
-		conf.selectCallback.call(window.up,id)
+		$("#asidemenubtn").trigger("click");
+    console.log(window.up);
+		options.selectCallback.call(window.up,id);
 	};
 };
 
@@ -493,7 +478,6 @@ Menu.prototype.setPosition = function(widget, caller, options) {
 	
 	var helper = $('<div class="positionHelper"></div>');
 	helper.css({ position: 'absolute', left: dims.refX, top: dims.refY, width: dims.refW, height: dims.refH });
-	console.log('before wrap helper');
 	el.wrap(helper);
 	
 	// get X pos

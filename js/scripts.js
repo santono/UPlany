@@ -1967,19 +1967,20 @@ class Up {
         }
     } // end of replaceUPlanCycleRowInHTMLTable()
     makeUPlanLines() {
+        this.body.innerHTML='';
         let i, j, tr, cycle, part, disciplina;
         for (i = 0; i < this.uplan.cycly.length; i++) {
             tr = document.createElement("tr");
             tr.dataset.cid = this.uplan.cycly[i].cid;
             this.addTd(tr, this.uplan.cycly[i].shifr, 1, "cycleheader")
-            this.addTd(tr, this.uplan.cycly[i].name, 50, "cycleheader")
+            this.addTd(tr, this.uplan.cycly[i].name, this.isBakalavr()?50:50-12, "cycleheader")
             this.body.appendChild(tr);
             if (this.uplan.cycly[i].basepart) {
                 cycle = this.uplan.cycly[i].basepart;
                 tr = document.createElement("tr");
                 this.addTd(tr, cycle.shifr, 1, "cycleheader");
 
-                this.addTd(tr, cycle.name, 50, "cycleheader");
+                this.addTd(tr, cycle.name, this.isBakalavr()?50:50-12, "cycleheader");
                 this.body.appendChild(tr);
                 for (j = 0; j < cycle.disciplines.length; j++) {
                     disciplina = cycle.disciplines[j];
@@ -1990,12 +1991,12 @@ class Up {
                 cycle = this.uplan.cycly[i].varpart;
                 tr = document.createElement("tr");
                 this.addTd(tr, cycle.shifr, 1, "cycleheader");
-                this.addTd(tr, cycle.name, 50, "cycleheader");
+                this.addTd(tr, cycle.name, this.isBakalavr()?50:50-12, "cycleheader");
                 this.body.appendChild(tr);
                 part = cycle.parts.vyz;
                 tr = document.createElement("tr");
                 this.addTd(tr, part.shifr, 1, "cycleheader");
-                this.addTd(tr, part.name, 50, "cycleheader");
+                this.addTd(tr, part.name, this.isBakalavr()?50:50-12, "cycleheader");
                 this.body.appendChild(tr);
                 for (j = 0; j < part.disciplines.length; j++) {
                     disciplina = part.disciplines[j];
@@ -2004,7 +2005,7 @@ class Up {
                 part = cycle.parts.student;
                 tr = document.createElement("tr");
                 this.addTd(tr, part.shifr, 1, "cycleheader");
-                this.addTd(tr, part.name, 50, "cycleheader");
+                this.addTd(tr, part.name, this.isBakalavr()?50:50-12, "cycleheader");
                 this.body.appendChild(tr);
                 for (j = 0; j < part.disciplines.length; j++) {
                     disciplina = part.disciplines[j];
@@ -2013,27 +2014,33 @@ class Up {
             }
             if (this.uplan.cycly[i].disciplines && this.uplan.cycly[i].disciplines.length > 0) {
                 for (j = 0; j < this.uplan.cycly[i].disciplines.length; j++) {
-                    disciplina = uplan.cycly[i].disciplines[j];
+                    disciplina = this.uplan.cycly[i].disciplines[j];
                     this.makeDisciplinaLine(disciplina);
                 }
             }
             if (this.uplan.cycly[i].footer) {
-                cycle = uplan.cycly[i];
+                cycle = this.uplan.cycly[i];
                 this.makeCycleFooter(cycle);
             }
         }
     } // end of makeUPlanLines;
+    isBakalavr() {
+        if  (this.uplan.okr=="Бакалавр") return true;
+        else return false;
+    }
+    isMagistr() {
+        if  (this.uplan.okr=="Магистр") return true;
+        else return false;
+    }
     makeUPlanHat() {
-        let planHat=hat(1);
-        console.log(planHat);
+        let planHat;
+        if  (this.isMagistr())
+            planHat=hat(2)
+        else
+            planHat=hat(1);
         $("#idplanhat").empty();
         let el=document.querySelector("#idplanhat");
         el.innerHTML=planHat;
-        console.log($("#idplanhat").html());
-//        $("#idplanhat").html(planHat);
-//        $(planHat).appendTo("#idplanhat");
-//        console.log($("#idplanhat").html());
-
     }
     makeInformPart() {
         let tr = document.createElement("tr");
@@ -2057,7 +2064,7 @@ class Up {
         //    tr.dataset.fid=cycle.footer.fid;
         tr.className = "planfooter";
         tr.dataset.cid = 101;
-        this.addTd(tr, "Информационная часть", 51, " center");
+        this.addTd(tr, "Информационная часть", this.isBakalavr()?51:51-12, " center");
         this.body.appendChild(tr);
         tr = document.createElement("tr");
         this.addTd(tr,"Практики",17," center");
@@ -2146,12 +2153,12 @@ class Up {
         tr = document.createElement("tr");
         tr.className = "planfooter";
         tr.dataset.cid = 102;
-        this.addTd(tr, "ГОСУДАРСТВЕННАЯ АТТЕСТАЦИЯ", 51, " center");
+        this.addTd(tr, "ГОСУДАРСТВЕННАЯ АТТЕСТАЦИЯ", this.isBakalavr()?51:51-12, " center");
         this.body.appendChild(tr);
         tr = document.createElement("tr");
         this.addTd(tr,"№",1," center");
         this.addTd(tr,"Программа подготовки",1," center");
-        this.addTd(tr,"Название",36," center");
+        this.addTd(tr,"Название",this.isBakalavr()?36:36-12," center");
         this.addTd(tr,"Семестр",5," center");
         this.addTd(tr,"ЗЕ",4," center");
         this.body.appendChild(tr);
@@ -2162,13 +2169,14 @@ class Up {
                 tr = document.createElement("tr");
                 this.addTd(tr,this.uplan.gosattestaciya[i].npp,1," center");
                 this.addTd(tr,this.uplan.gosattestaciya[i].okr,1,"");
-                this.addTd(tr,this.uplan.gosattestaciya[i].name,36,"");
+                this.addTd(tr,this.uplan.gosattestaciya[i].name,this.isBakalavr()?36:36-12,"");
                 this.addTd(tr,this.uplan.gosattestaciya[i].nomsemestra,5," center");
-                this.addTd(tr,this.uplan.gosattestaciya[i].ze,36," center");
+                this.addTd(tr,this.uplan.gosattestaciya[i].ze,this.isBakalavr()?36:36-12," center");
                 this.body.appendChild(tr);
             }
     }
     showPlan() {
+//        console.log('showplan');
         this.makeUPlanMarking();
         this.makeUPlanHat();
         this.makeUPlanLines();
@@ -2312,19 +2320,26 @@ class Up {
     }
     getUPlanFromMDB(id) {
           let apiKey="kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
-          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany?";
-          let q='q={"_id": "'+id+'" }}';
-          let URL=fixedURL+q+"&"+f+"&apiKey="+apiKey;
+          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany/";
+//          let q='q={"_id": ObjectId("'+id+'") }';
+          let q=id;
+          let URL=fixedURL+q+"?apiKey="+apiKey;
           let self=this;
+//          console.log(this);
           loader.showWait('Чтение учебного плана');
           $.ajax( { url: URL,
           type: "GET"
            })
           .done(function(data) {
              loader.hideWait();
-             let iplan=JSON.parse(data);
-             winodw.ip=iplan;
-             self.showPlan(iplan);
+//             console.log(data);
+             let iplans=JSON.stringify(data);
+//             console.log(iplans);
+             let iplan=JSON.parse(iplans);
+             let body = document.querySelector("#planbody");
+             self.uplan = iplan;
+             self.showPlan();
+//             window.up.showPlan();
 //             loader.showFinished('Список прочтен из БД');
           })
           .fail(function( jqXHR, textStatus) {
@@ -2348,6 +2363,7 @@ class Up {
 //            $.ajax( { url: "https://api.mlab.com/api/1/databases/my-db/collections/my-coll?apiKey=myAPIKey",
           let URL=fixedURL+q+"&"+f+"&apiKey="+apiKey;
           loader.showWait('Чтение списка учебных планов');
+
           $.ajax( { url: URL,
      //     data: JSON.stringify( this.uplan ),
           type: "GET"
@@ -2367,8 +2383,8 @@ class Up {
     }
 
 } // Конец класса
-let up;
-let user;
+var up;
+var user;
 // $(document).ready(
 //     $.fn.center = function () {
 //       this.css("position", "absolute");
@@ -2379,14 +2395,6 @@ let user;
 //     );
 function finishMenu() {
 //    console.log($('#userselectplan').html());
-$(".selector").on({
-    mouseenter: function () {
-        //stuff to do on mouse enter
-    },
-    mouseleave: function () {
-        //stuff to do on mouse leave
-    }
-});
   $('.fg-button').on({
      mouseenter: function(){ $(this).removeClass('ui-state-default').addClass('ui-state-focus'); },
      mouseleave: function(){ $(this).removeClass('ui-state-focus').addClass('ui-state-default'); }
@@ -2402,8 +2410,9 @@ $(".selector").on({
 window.onload = function() {
     let body = document.querySelector("#planbody");
     user= new User("Ромашка Е.В.","usekretar",95);
-    menugetplan({user:user,rootElement:"#userselectplan",callback:finishMenu});
     up = new Up(uplan, body);
+//    console.log(window.up);
+    menugetplan({user:user,rootElement:"#userselectplan",callback:finishMenu});
 //    up.insertUPlanIntoMDB();
 //    up.selectUPlanFromMDB();
     /* methods */
@@ -2425,6 +2434,20 @@ window.onload = function() {
                             up.fillUpdateDiscForm();
                         }
                     }
+                    if (up.isMagistr()) {
+                        console.log($("#isem5b").length);
+                        $("#isem5b").hide();
+                        $("#isem6b").hide();
+                        $("#isem7b").hide();
+                        $("#isem8b").hide();
+                    } else {
+                        $("#isem5b").show();
+                        $("#isem6b").show();
+                        $("#isem7b").show();
+                        $("#isem8b").show();
+                    }
+
+
                     $("#blackwindow").toggle('active');
                     $("#updatediscform").toggle('active');
                     //         target.innerText=newName;
@@ -2479,6 +2502,7 @@ window.onload = function() {
                             $("#modesrc").val('table');
                         }
                     }
+
                     $("#blackwindowekz").toggle('active');
                     $("#updateekzform").toggle('active');
                 } else

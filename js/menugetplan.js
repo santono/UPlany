@@ -11,7 +11,7 @@ menugetplan=(function(conf) {
          callBack : null 
 
      }
-     convertToHierarchyMenu=function(root,data) {
+     let convertToHierarchyMenu=function(root,data) {
                 if (!data) return;
                 let li=document.createElement("li");
                 let a=document.createElement("a");
@@ -33,7 +33,7 @@ menugetplan=(function(conf) {
 //                console.log(root);
                 root.appendChild(li);
      }
-     buildDOM = function(conf,data) {
+     let buildDOM = function(conf,data) {
               if (!data) 
                 return;
               if (!Array.isArray(data))
@@ -54,7 +54,7 @@ menugetplan=(function(conf) {
                  conf.callback.call(window.document); 
               }      
      }
-     buildMenuList = function(conf) {
+     let buildMenuList = function(conf) {
           let q='q={"shifrkaf":'+conf.user.shifrKaf+'}';
           let URL=conf.mongoURL+q+"&apiKey="+conf.apiKey;
           let self=this;
@@ -65,7 +65,7 @@ menugetplan=(function(conf) {
           .done(function(data) {
              loader.hideWait();
 //             loader.showFinished('Список прочтен из БД');
-             self.buildDOM(conf,data);
+             buildDOM(conf,data);
           })
           .fail(function( jqXHR, textStatus) {
              loader.hideWait();

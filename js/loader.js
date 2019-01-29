@@ -1,5 +1,5 @@
 loader=(function() {
-    ajaxLoader=function () {
+    let ajaxLoader=function () {
         $('body').append('<div id="loadingDiv"></div>');
 
         $('#loadingDiv')
@@ -28,7 +28,7 @@ loader=(function() {
                 .css('font-family', 'Segoe UI, Tahoma, Arial');
     }
 
-    ajaxFinished = function() {
+    let ajaxFinished = function() {
         $('body').append('<div id="finishedDiv"></div>');
 
         $('#finishedDiv')
@@ -56,21 +56,21 @@ loader=(function() {
                 .css('font', '20px bolder')
                 .css('font-family', 'Segoe UI, Tahoma, Arial');
     }
-	hideLoader=function() {
+	let hideLoader=function() {
         $('#loadingDiv').hide();
         $('#finishedDiv').hide();
 	}
-	initLoader=function() {
+	let initLoader=function() {
 		ajaxLoader();
 		ajaxFinished();
 	}
     
-    showWaitMessage=function (message) {
+    let showWaitMessage=function (message) {
         $('#loadingText').text(message);
         $('#loadingDiv').show();
     }
     
-	showFinishedMessage=function(result) {
+	let showFinishedMessage=function(result) {
         $('#finishedText').text(result);
         $('#finishedDiv').show();
         let idt=setTimeout(function() {
