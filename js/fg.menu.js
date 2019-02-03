@@ -249,7 +249,7 @@ function Menu(caller, options){
 //		alert("selected id="+$(item).attr('data-id'));
 		let id=$(item).attr('data-id');
 		$("#asidemenubtn").trigger("click");
-    console.log(window.up);
+//console.log(window.up);
 		options.selectCallback.call(window.up,id);
 	};
 };

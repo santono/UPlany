@@ -4,11 +4,11 @@ menugetplan=(function(conf) {
 //    let user     = {shifrKaf:95};
      let idplan;
      let config={
-         mongoURL : "https://api.mlab.com/api/1/databases/uplany/collections/usersplany?",
-         apiKey   : "kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf",
-         user     : window.user,
+         mongoURL    : ajaxConfig.mongoURL+"/usersplany?",
+         apiKey      : ajaxConfig.apiKey,
+         user        : window.user,
          rootElement : null,
-         callBack : null 
+         callBack    : null 
 
      }
      let convertToHierarchyMenu=function(root,data) {
@@ -17,7 +17,7 @@ menugetplan=(function(conf) {
                 let a=document.createElement("a");
                 a.innerText=data.name;
                 a.setAttribute("href", "#");
-                li.appendChild(a); 
+                li.appendChild(a);
      //           console.log(data.childrens);
                 if (data.childrens
                    && Array.isArray(data.childrens)
@@ -26,7 +26,7 @@ menugetplan=(function(conf) {
                    for (let i=0;i<data.childrens.length;i++) {
                         convertToHierarchyMenu(ul,data.childrens[i]);
                    }
-                   li.appendChild(ul);  
+                   li.appendChild(ul);
                 } else {
                   a.dataset.id=data.id;
                 }
@@ -42,7 +42,7 @@ menugetplan=(function(conf) {
                 return;
               let ul=document.createElement("ul");
               for (let i=0;i<data[0].childrens.length;i++) {
-                       convertToHierarchyMenu(ul,data[0].childrens[i]);
+                  convertToHierarchyMenu(ul,data[0].childrens[i]);
               }
  //             console.log(ul);
               let r=document.querySelector(conf.rootElement);
@@ -65,12 +65,20 @@ menugetplan=(function(conf) {
           .done(function(data) {
              loader.hideWait();
 //             loader.showFinished('Список прочтен из БД');
+             console.log("setItem="+JSON.stringify(data));
+             localStorage.setItem("userPlany",JSON.stringify(data));
              buildDOM(conf,data);
           })
           .fail(function( jqXHR, textStatus) {
              loader.hideWait();
-             loader.showFinished('Ошибка чтения списка планов'+textStatus);
+             loader.showFinished('Ошибка чтения списка планов '+textStatus);
           });
+     }
+
+     let buildMenuListFromLocalStorage = function(conf) {
+          let dataS=localStorage.getItem("userPlany");
+          let data=JSON.parse(dataS);
+          buildDOM(conf,data);
      }
 
      return function(confpar) { 
@@ -81,7 +89,25 @@ menugetplan=(function(conf) {
               let r=document.querySelector(conf.rootElement);
               if (!r)
                  return null; 
-              buildMenuList(conf);
+//               console.log(localStorage);
+               let datas=localStorage.getItem("userPlany");
+               let data=JSON.parse(datas);
+               let shifrKaf1=null;
+               let shifrKaf2=confpar.user.shifrKaf;
+//               console.log(data);
+               if (data) {
+//                  console.log(" userPlany.shifrkaf="+data[0].shifrkaf); 
+                  shifrKaf1=data[0].shifrkaf;
+               }
+//                console.log('shifrKaf1='+shifrKaf1+' shifrKaf2='+shifrKaf2);
+              if ((typeof(Storage) === "undefined")
+                || (shifrKaf1!=shifrKaf2)) {
+//                console.log("ajax ");
+                buildMenuList(conf);
+             } else {
+//               console.log("localStorage");
+               buildMenuListFromLocalStorage(conf);
+             }
             return idplan;
      }
 }());

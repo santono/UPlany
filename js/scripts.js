@@ -2,7 +2,7 @@
 let uplan = {
     UGNP: { shifr: "09.00.00", name: "Информатика и вычислительная техника" },
     napr: { shifr: "09.03.02", name: "Информационные системы и технологии" },
-    profil: { shifr: ".03.02.02", name: "Информационные системы и технологии" },
+    profil: { shifr: "09.03.02.02", name: "Информационные системы и технологии" },
     formaob: "Очная",
     yearpost: 2018,
     okr: "Бакалавр",
@@ -1328,6 +1328,25 @@ class Up {
                 }
 
     }
+    fillUpdateParPlanForm() {
+        let i, j;
+        let s, s0, s1, s2, n;
+        $('#iokr').val(this.uplan.okr);
+        $('#iyear').val(this.uplan.yearpost);
+        $('#ikaf').val(this.uplan.kafedra);
+        $('#iugnp').val(this.uplan.UGNP.shifr);
+        $('#iugnpname').val(this.uplan.UGNP.name);
+        $('#inapr').val(this.uplan.napr.shifr);
+        $('#inaprname').val(this.uplan.napr.name);
+        $('#iprofil').val(this.uplan.profil.shifr);
+        $('#iprofilname').val(this.uplan.profil.name);
+        $('#iformaob').val(this.uplan.formaob);
+        $('#isrokob').val(parseInt(this.uplan.srokob));
+        $('#iamntofsemesters').val(this.uplan.amntofsemesters);
+        $('#iweekpersemestr').val(this.uplan.weekpersemestr.join(','));
+
+    }
+
     fillUpdateDiscForm() {
         let i, j;
         let s, s0, s1, s2, n;
@@ -1622,8 +1641,8 @@ class Up {
         tr.appendChild(td);
     }
     makeDisciplinaLine(disciplina) {
-        const classCenterBorderNone = "center border-none";
-        const classCenterBorderLeft = "center border-left";
+        const classCenterBorderNone  = "center border-none";
+        const classCenterBorderLeft  = "center border-left";
         const classCenterBorderRight = "center border-right";
         let tr = document.createElement("tr");
         let curre = 0;
@@ -1702,7 +1721,7 @@ class Up {
     makeCycleFooter(cycle, footerLine) {
         let e;
         let summaClockTot = 0;
-        let summaZE = 0;
+        let summaZE       = 0;
         let summaClockLek = 0;
         let summaClockLab = 0;
         let summaClockPra = 0;
@@ -1792,7 +1811,7 @@ class Up {
     makePlanFooter() {
         let footerLine = {
             summaClockTot: 0,
-            summaZE: 0,
+            summaZE      : 0,
             summaClockLek: 0,
             summaClockLab: 0,
             summaClockPra: 0,
@@ -1951,7 +1970,7 @@ class Up {
         let rootSelector = 'tr.planfooter td';
         let currSelector;
         $(rootSelector + ".clocktot").text(footerLine.summaClockTot);
-        $(rootSelector + ".clockze").text(footerLine.summaZE);
+        $(rootSelector + ".clockze"). text(footerLine.summaZE);
         $(rootSelector + ".clocklek").text(footerLine.summaClockLek);
         $(rootSelector + ".clocklab").text(footerLine.summaClockLab);
         $(rootSelector + ".clockpra").text(footerLine.summaClockPra);
@@ -1996,6 +2015,7 @@ class Up {
                 part = cycle.parts.vyz;
                 tr = document.createElement("tr");
                 this.addTd(tr, part.shifr, 1, "cycleheader");
+                console.log("is bak "+this.isBakalavr()+' name='+part.name);
                 this.addTd(tr, part.name, this.isBakalavr()?50:50-12, "cycleheader");
                 this.body.appendChild(tr);
                 for (j = 0; j < part.disciplines.length; j++) {
@@ -2300,8 +2320,28 @@ class Up {
 
     insertUPlanIntoMDB() {
 //          return;
-          let apiKey="kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
-          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany?apiKey=kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
+          let fixedURL=ajaxConfig.mongoURL+'uplany?apiKey='+ajaxConfig.apiKey;
+//          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany?apiKey=kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
+//            $.ajax( { url: "https://api.mlab.com/api/1/databases/my-db/collections/my-coll?apiKey=myAPIKey",
+          loader.showWait('Загрузка учебного плана');
+          $.ajax( { url: fixedURL,
+          data: JSON.stringify( this.uplan ),
+          type: "POST",
+          contentType: "application/json" } )
+          .done(function() {
+             loader.hideWait();
+             loader.showFinished('План записан в БД');
+//             alert( "План сохранен" );
+          })
+          .fail(function( jqXHR, textStatus) {
+//            alert( "Ошибка сохранения плана "+ textStatus );
+             loader.showFinished('Ошибка сохранения плана+textStatus');
+          });
+    }
+    putUPlanIntoMDB() {
+//          return;
+          let fixedURL=ajaxConfig.mongoURL+'uplany?apiKey='+ajaxConfig.apiKey;
+//          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany?apiKey=kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
 //            $.ajax( { url: "https://api.mlab.com/api/1/databases/my-db/collections/my-coll?apiKey=myAPIKey",
           loader.showWait('Загрузка учебного плана');
           $.ajax( { url: fixedURL,
@@ -2319,8 +2359,9 @@ class Up {
           });
     }
     getUPlanFromMDB(id) {
-          let apiKey="kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
-          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany/";
+          let apiKey=ajaxConfig.apiKey;
+          let fixedURL=ajaxConfig.mongoURL+"uplany/";
+//          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany/";
 //          let q='q={"_id": ObjectId("'+id+'") }';
           let q=id;
           let URL=fixedURL+q+"?apiKey="+apiKey;
@@ -2352,10 +2393,11 @@ class Up {
     }
     selectUPlanFromMDB() {
 //          return;
-          let apiKey="kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
+          let apiKey=ajaxConfig.apiKey;
 //          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany?apiKey=kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
 //          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany?q={"active": true}&f={"firstName": 1, "lastName": 1}&c=true&apiKey=";
-          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany?";
+          let fixedURL=ajaxConfig.mongoURL+"uplany?";
+//          let fixedURL="https://api.mlab.com/api/1/databases/uplany/collections/uplany?";
 //          let q='q={"napr.shifr": "09.03.02";
           let q='q={"napr.shifr": {$in: ["09.03.02","09.04.02"]}}';
   //        status: { $in: [ "A", "D" ] }}';
@@ -2400,14 +2442,15 @@ function finishMenu() {
      mouseleave: function(){ $(this).removeClass('ui-state-focus').addClass('ui-state-default'); }
    });
 
-   $('#loadbtn').menu({ content: $('#loadbtn').next().html(), 
+   $('#loadbtn').menu({ content : $('#loadbtn').next().html(), 
                         backLink: true,
                         crumbDefaultText: ' ',
                         flyOut: true,
-                        width:"20vmax",
+                        width :"20vmax",
                         selectCallback:up.getUPlanFromMDB});
 }
 window.onload = function() {
+ //   saveSprToLS();
     let body = document.querySelector("#planbody");
     user= new User("Ромашка Е.В.","usekretar",95);
     up = new Up(uplan, body);
@@ -2448,8 +2491,8 @@ window.onload = function() {
                     }
 
 
-                    $("#blackwindow").toggle('active');
-                    $("#updatediscform").toggle('active');
+                    $("#blackwindow").toggleClass('active');
+                    $("#updatediscform").toggleClass('active');
                     //         target.innerText=newName;
                 } else
                 if (target.classList.contains('ekz1') ||
@@ -2466,8 +2509,8 @@ window.onload = function() {
                             $("#modesrc").val('table');
                         }
                     }
-                    $("#blackwindowekz").toggle('active');
-                    $("#updateekzform").toggle('active');
+                    $("#blackwindowekz").toggleClass('active');
+                    $("#updateekzform").toggleClass('active');
 
                 } else
                 if (target.classList.contains('zach1') ||
@@ -2484,8 +2527,8 @@ window.onload = function() {
                             $("#modesrc").val('table');
                         }
                     }
-                    $("#blackwindowekz").toggle('active');
-                    $("#updateekzform").toggle('active');
+                    $("#blackwindowekz").toggleClass('active');
+                    $("#updateekzform").toggleClass('active');
 
                 } else
                 if (target.classList.contains('indz1') ||
@@ -2503,8 +2546,8 @@ window.onload = function() {
                         }
                     }
 
-                    $("#blackwindowekz").toggle('active');
-                    $("#updateekzform").toggle('active');
+                    $("#blackwindowekz").toggleClass('active');
+                    $("#updateekzform").toggleClass('active');
                 } else
                     alert('clicked');
                 return;
@@ -2513,11 +2556,112 @@ window.onload = function() {
         }
 
     }
-    $("#blackwindow,#closeform").on("click",function(ev) {
+    let hatelem=document.querySelector("#idplanhat");
+    hatelem.onclick = function(event) {
+        let target = event.target;
+        let parent, did;
+        while (target != this) {
+            console.log(target.tagName+' target parent '+target.parentNode.tagName);
+            if (target.tagName == 'TH') {
+                up.fillUpdateParPlanForm();
+                $("#blackwindow").toggleClass('active');
+                $("#updateparplanformcontainer").toggleClass('active');
+
+            } else
+            if (target.tagName == 'TD') {
+                // нашли элемент, который нас интересует!
+                if (target.classList.contains('named')) {
+                    parent = target.parentElement;
+                    if (parent.tagName == 'TR') {
+                        did = parent.dataset.did;
+                        up.fillDiscRow(did);
+                        if (up.discRow) {
+                            up.saveDiscRow();
+                            up.fillUpdateDiscForm();
+                        }
+                    }
+                    if (up.isMagistr()) {
+                        $("#isem5b").hide();
+                        $("#isem6b").hide();
+                        $("#isem7b").hide();
+                        $("#isem8b").hide();
+                    } else {
+                        $("#isem5b").show();
+                        $("#isem6b").show();
+                        $("#isem7b").show();
+                        $("#isem8b").show();
+                    }
+
+
+                    $("#blackwindow").toggleClass('active');
+                    $("#updatediscform").toggleClass('active');
+                    //         target.innerText=newName;
+                } else
+                if (target.classList.contains('ekz1') ||
+                    target.classList.contains('ekz2') ||
+                    target.classList.contains('ekz3') ||
+                    target.classList.contains('ekz4')) {
+                    parent = target.parentElement;
+                    if (parent.tagName == 'TR') {
+                        did = parent.dataset.did;
+                        up.fillDiscRow(did);
+                        if (up.discRow) {
+                            up.saveDiscRow();
+                            up.fillUpdateEkzForm('ekz');
+                            $("#modesrc").val('table');
+                        }
+                    }
+                    $("#blackwindowekz").toggleClass('active');
+                    $("#updateekzform").toggleClass('active');
+
+                } else
+                if (target.classList.contains('zach1') ||
+                    target.classList.contains('zach2') ||
+                    target.classList.contains('zach3') ||
+                    target.classList.contains('zach4')) {
+                    parent = target.parentElement;
+                    if (parent.tagName == 'TR') {
+                        did = parent.dataset.did;
+                        up.fillDiscRow(did);
+                        if (up.discRow) {
+                            up.saveDiscRow();
+                            up.fillUpdateEkzForm('zach');
+                            $("#modesrc").val('table');
+                        }
+                    }
+                    $("#blackwindowekz").toggleClass('active');
+                    $("#updateekzform").toggleClass('active');
+
+                } else
+                if (target.classList.contains('indz1') ||
+                    target.classList.contains('indz2') ||
+                    target.classList.contains('indz3') ||
+                    target.classList.contains('indz4')) {
+                    parent = target.parentElement;
+                    if (parent.tagName == 'TR') {
+                        did = parent.dataset.did;
+                        up.fillDiscRow(did);
+                        if (up.discRow) {
+                            up.saveDiscRow();
+                            up.fillUpdateEkzForm('indz');
+                            $("#modesrc").val('table');
+                        }
+                    }
+
+                    $("#blackwindowekz").toggleClass('active');
+                    $("#updateekzform").toggleClass('active');
+                } else
+                    alert('clicked');
+                return;
+            }
+            target = target.parentNode;
+        }
+
+    }
+    $("#blackwindow,#closeform,#closeparplanform").on("click",function(ev) {
 //       console.log('selsem len='+$("#selsem").length);
        if ($("#selsem").length>0) {
            let nomSemestra=$("#selsem").attr("data-nomsemestra");;
-           console.log('nomSemestra='+nomSemestra);
            let nameSemestra="#isem"+nomSemestra;
            $("#selsem").remove();
            $(nameSemestra).toggleClass("active");
@@ -2526,12 +2670,15 @@ window.onload = function() {
           return;
        }
 
-        $("#blackwindow").toggle('active');
-        $("#updatediscform").toggle('active');
+        $("#blackwindow").toggleClass('active');
+        if ($("#updatediscform").hasClass('active'))
+           $("#updatediscform").toggleClass('active');
+        if ($("#updateparplanformcontainer").hasClass('active'))
+           $("#updateparplanformcontainer").toggleClass('active');
     });
     $("#blackwindowekz,#closeformekz").on("click",function() {
-        $("#blackwindowekz").toggle('active');
-        $("#updateekzform").toggle('active');
+        $("#blackwindowekz").toggleClass('active');
+        $("#updateekzform").toggleClass('active');
     });
     let localSavedDiscRow = up.savedDiscRow;
     let clickHandler = function(ev) {
@@ -2545,8 +2692,8 @@ window.onload = function() {
             up.replaceUPlanDiscRowInHTMLTable();
             up.replaceUPlanCycleFooterRowInHTMLTable();
             up.replaceUPlanTotalFooterRowInHTMLTable()
-            $("#blackwindow").toggle('active');
-            $("#updatediscform").toggle('active');
+            $("#blackwindow").toggleClass('active');
+            $("#updatediscform").toggleClass('active');
         }
     };
     $("#btnaccept").on("click",clickHandler);
@@ -2566,8 +2713,8 @@ window.onload = function() {
                 mode = $("#modesrc").val();
                 if (mode == 'form')
                     up.fillUpdateDiscFormEkzZachIndz();
-                $("#blackwindowekz").toggle('active');
-                $("#updateekzform").toggle('active');
+                $("#blackwindowekz").toggleClass('active');
+                $("#updateekzform").toggleClass('active');
             }
         }
 
@@ -2575,20 +2722,20 @@ window.onload = function() {
     $("#iekz").on("click",function() {
         up.fillUpdateEkzForm('ekz');
         $("#modesrc").val('form');
-        $("#blackwindowekz").toggle('active');
-        $("#updateekzform").toggle('active');
+        $("#blackwindowekz").toggleClass('active');
+        $("#updateekzform").toggleClass('active');
     });
     $("#izach").on("click",function() {
         up.fillUpdateEkzForm('zach');
         $("#modesrc").val('form');
-        $("#blackwindowekz").toggle('active');
-        $("#updateekzform").toggle('active');
+        $("#blackwindowekz").toggleClass('active');
+        $("#updateekzform").toggleClass('active');
     });
     $("#iindz").on("click",function() {
         up.fillUpdateEkzForm('indz');
         $("#modesrc").val('form');
-        $("#blackwindowekz").toggle('active');
-        $("#updateekzform").toggle('active');
+        $("#blackwindowekz").toggleClass('active');
+        $("#updateekzform").toggleClass('active');
     });
     $("#isem1b,#isem2b,#isem3b,#isem4b,#isem5b,#isem6b,#isem7b,#isem8b").on("click",function(ev){
        let semnames=["isem1","isem2","isem3","isem4","isem5","isem6","isem7","isem8"];
@@ -2608,6 +2755,14 @@ window.onload = function() {
     });
     $("#asidemenubtn,#asidemenuboxheader").on("click",function() {
          $("#asidemenubox").toggleClass("active");
+    });
+    $("#saveuplanbtn").on("click",function(){
+        if  (!up.uplan) {
+            alert('План отсутствует!');
+            return;
+        }
+        alert("_id="+JSON.stringify(up.uplan._id));
+
     });
 
 }
