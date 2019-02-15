@@ -2453,7 +2453,14 @@ window.onload = function() {
  //   saveSprToLS();
     let body = document.querySelector("#planbody");
     user= new User("Ромашка Е.В.","usekretar",95);
-    up = new Up(uplan, body);
+    if (localStorage.getItem("UPlany")) {
+        console.log("localStorage");
+        let upl=JSON.parse(localStorage.getItem("UPlany"));
+        up = new Up(upl, body);
+    } else {
+        console.log("default");
+        up = new Up(uplan, body);
+    }
 //    console.log(window.up);
     menugetplan({user:user,rootElement:"#userselectplan",callback:finishMenu});
 //    up.insertUPlanIntoMDB();
