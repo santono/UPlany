@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Импорт учебного плана</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="icon" type="../image/png" href="../img/logo.png" />
+    <link rel="stylesheet" href="../css/sheetjs/sheetjs.css">
+  </head>
+  <body>
+    <script src="../js/vendor/alertify.js"></script>
+    <link rel="stylesheet" media="screen" href="../css/vendor/samples.css">
+    <link rel="stylesheet" media="screen" href="../css/vendor/alertify.css">
+
+    <div id="body">
+      <div id="left">
+        <div id="logo">
+          <img src="../img/logo.png" class="logo" alt="SheetJS Logo" width=128px height=128px />
+        </div>
+        <div id="drop">Перетащите файл плана сюда</div>
+        <input type="file" id="file" value=""/><label for="file">... или укажите файл учебного плана</label>
+      </div>
+      <div id="right">
+        <div id="header">
+           <pre id="out"></pre>
+           <h2>Импорт учебного в базу данных</h2>
+           <h3>
+               Для загрузки учебного плана перетащите мышью Excel файл учебного плана в прямоугольник слева.<br/>
+              <b>Предполагается, что план заполнен в соотвествии с шаблоном.</b><br/>
+              Файлы, несоотвествующие шаблону не конвертируются
+              <br/>
+              Процесс загрузки происходит в браузере.<br />
+              <b>Файлы не передются на сервер (конвертация плана выполняется на Вашен компютере)
+              </b>
+              </br>
+           </h3>
+         </div>
+    <div id="grid"></div>
+       <div id="footnote">
+          <h3> <b></b></h3>
+       </div>
+      </div>
+    </div>
+    <script src="../js/sheetjs/configimport.js"></script>
+    <script src="../js/sheetjs/xlsx.full.min.js"></script>
+    <script src="../js/sheetjs/convertUpToJSON.js"></script>
+    <script src="../js/sheetjs/dropsheet.js"></script>
+    <script src="../js/sheetjs/main.js"></script>
+    <script src="../js/vendor/spin.js"></script>
+  </body>
+</html>

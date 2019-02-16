@@ -1088,13 +1088,13 @@ let uplan = {
         shifr: "#",
         name: "Всего за нормативный срок обучения"
     },
-    clocksperweek:[],
-    nmbofkursp:[],
-    nmbofkursr:[],
-    nmbofindz:[],
-    nmbofekz:[],
-    nmbofzach:[],
-    nmbofze:[],
+    clocksperweek:[30, 28, 30, 30, 30, 30, 30, 30],
+    nmbofkursp:[0, 0, 0, 0, 0, 1, 0, 0],
+    nmbofkursr:[0, 0, 0, 1, 1, 1, 0, 1],
+    nmbofindz:[3, 4, 2, 2, 2, 1, 0, 0],
+    nmbofekz:[5, 5, 4, 5, 4, 5, 4, 4],
+    nmbofzach:[4, 3, 4, 3, 4, 4, 5, 4],
+    nmbofze:[30.00, 30.00, 30.00, 30.00, 30.00, 30.00, 30.00, 30.00],
     nmbofzeperyear:[],
 
     praktics:[{
@@ -2075,6 +2075,7 @@ class Up {
                 if (i<5) {
                    praktics[i].npp         = this.uplan.praktics[i].npp;
                    praktics[i].name        = this.uplan.praktics[i].name;
+                   praktics[i].nmbofweek   = this.uplan.praktics[i].nmbofweek;
                    praktics[i].nomsemestra = this.uplan.praktics[i].nomsemestra;
                    praktics[i].ze          = this.uplan.praktics[i].ze;
                }
@@ -2090,7 +2091,8 @@ class Up {
         this.addTd(tr,"Практики",17," center");
         this.addTd(tr,"Учебные занятия (часов в неделю)",6,"");
         for (let i=0;i<this.uplan.amntofsemesters;i++) {
-            this.addTd(tr,"30",3," center");
+            console.log("i="+i+" clocks="+this.uplan.clocksperweek[i]);
+            this.addTd(tr,this.uplan.clocksperweek[i],3," center");
         }
         this.body.appendChild(tr);
         tr = document.createElement("tr");
@@ -2102,7 +2104,7 @@ class Up {
         this.addTd(tr,"Курсовые проекты",5,"");
         this.addTd(tr,"1",1,"center");
         for (let i=0;i<this.uplan.amntofsemesters;i++) {
-            this.addTd(tr,"30",3," center");
+            this.addTd(tr,this.uplan.nmbofkursp[i]>0?this.uplan.nmbofkursp[i]:"-",3," center");
         }
         this.body.appendChild(tr);
         for (let j=0;j<5;j++) {
@@ -2110,7 +2112,7 @@ class Up {
             if (praktics[j].npp>0) {
                  this.addTd(tr,praktics[j].npp,1," center");
                  this.addTd(tr,praktics[j].name,2,"");
-                 this.addTd(tr,praktics[j].nomersemestra,5," center");
+                 this.addTd(tr,praktics[j].nomsemestra,5," center");
                  this.addTd(tr,praktics[j].nmbofweek,5," center");
                  this.addTd(tr,praktics[j].ze,4," center");
             }
@@ -2126,34 +2128,34 @@ class Up {
                     this.addTd(tr,"Курсовые работы",5,"");
                     this.addTd(tr,"1",1,"center");
                     for (let i=0;i<this.uplan.amntofsemesters;i++) {
-                       this.addTd(tr,"30",3," center");
+                       this.addTd(tr,this.uplan.nmbofkursr[i]>0?uplan.nmbofkursr[i]:"-",3," center");
                     }
                     break;
                 case 1:
                     this.addTd(tr,"Индивидуальные задания",5,"");
                     this.addTd(tr,"1",1,"center");
                     for (let i=0;i<this.uplan.amntofsemesters;i++) {
-                       this.addTd(tr,"30",3," center");
+                       this.addTd(tr,this.uplan.nmbofindz[i]>0?uplan.nmbofindz[i]:"-",3," center");
                     }
                     break;
                 case 2:
                     this.addTd(tr,"Экзамены",5,"");
                     this.addTd(tr,"1",1,"center");
                     for (let i=0;i<this.uplan.amntofsemesters;i++) {
-                       this.addTd(tr,"30",3," center");
+                       this.addTd(tr,this.uplan.nmbofekz[i]>0?uplan.nmbofekz[i]:"-",3," center");
                     }
                     break;
                 case 3:
                     this.addTd(tr,"Зачеты",5,"");
                     this.addTd(tr,"1",1,"center");
                     for (let i=0;i<this.uplan.amntofsemesters;i++) {
-                       this.addTd(tr,"30",3," center");
+                       this.addTd(tr,this.uplan.nmbofzach[i]>0?uplan.nmbofzach[i]:"-",3," center");
                     }
                     break;
                 case 4:
                     this.addTd(tr,"ЗЕ",6,"");
                     for (let i=0;i<this.uplan.amntofsemesters;i++) {
-                       this.addTd(tr,"30",3," center");
+                       this.addTd(tr,this.uplan.nmbofze[i]>0?uplan.nmbofze[i]:"-",3," center");
                     }
                     break;
                 default:
@@ -2167,7 +2169,7 @@ class Up {
         this.addTd(tr,"50",9," center");
         this.addTd(tr,"ЗЕ за учебный год",6,"");
         for (let i=0;i<this.uplan.amntofsemesters/2;i++) {
-            this.addTd(tr,"60",6," center");
+            this.addTd(tr,this.uplan.nmbofze[i*2]+this.uplan.nmbofze[i*2+1]>0?uplan.nmbofze[i*2]+this.uplan.nmbofze[i*2+1]:"-",6," center");
         }
         this.body.appendChild(tr);
         tr = document.createElement("tr");
@@ -2453,9 +2455,9 @@ window.onload = function() {
  //   saveSprToLS();
     let body = document.querySelector("#planbody");
     user= new User("Ромашка Е.В.","usekretar",95);
-    if (localStorage.getItem("UPlany")) {
+    if (localStorage.getItem("UPlan")) {
         console.log("localStorage");
-        let upl=JSON.parse(localStorage.getItem("UPlany"));
+        let upl=JSON.parse(localStorage.getItem("UPlan"));
         up = new Up(upl, body);
     } else {
         console.log("default");
@@ -2771,6 +2773,11 @@ window.onload = function() {
         alert("_id="+JSON.stringify(up.uplan._id));
 
     });
+    $("#impfrxlsxbtn").on("click",function(){
+        console.log('0='+window.location.hostname);
+        document.location.assign('./static/importe.html');
+    });
+
 
 }
 //mongodb://santono:ar1737@ds237445.mlab.com:37445/uplany
