@@ -1,4 +1,5 @@
-convertUpToJSON=(function() {
+"use strict"
+let convertUpToJSON=(function() {
    let selfSheet=null;
    let getStringFromCell=function(cell) {
        let r=cell.r-1;
@@ -6,7 +7,7 @@ convertUpToJSON=(function() {
        let retVal=undefined;
        let cellRef=XLSX.utils.encode_cell({c:c,r:r});
        try {
-          retVal=selfSheet[XLSX.utils.encode_cell({c:c,r:r})].v;
+           retVal=selfSheet[cellRef].v;
        } catch (error) {
           retVal=undefined;
        }  
@@ -74,6 +75,28 @@ convertUpToJSON=(function() {
           let s1=getStringFromCell({c:3,r:r});
           let dolg=s.trim()+' '+s1.trim();
           let fio=getStringFromCell({c:39,r:r});
+          podpisi.push({dolg:dolg,fio:fio});
+       }
+       return podpisi;
+   }
+   let getArrayOfPodpisi2019=function(configUPlanXLS) {
+       let podpisi=[];
+       let rstart=configUPlanXLS.podpisi.row;
+       for (let i=0;i<4;i++) {
+          let r=rstart+i*2;
+          if (i==3) r++;
+          let s=getStringFromCell({c:configUPlanXLS.podpisi.dolgCol,r:r});
+          let s1=""; 
+          if (i>1) {
+             let r1=r+1;
+             s1=getStringFromCell({c:configUPlanXLS.podpisi.dolgCol,r:r1});
+          }
+          if (s1.trim().length>0) {
+             let dolg=s.trim()+' '+s1.trim();
+          } else {
+             let dolg=s.trim();
+          }
+          let fio=getStringFromCell({c:configUPlanXLS.podpisi.fioCol,r:r});
           podpisi.push({dolg:dolg,fio:fio});
        }
        return podpisi;
@@ -164,6 +187,7 @@ convertUpToJSON=(function() {
                let semestry = [];
                let cntSem   = 0 ;
                for (let j=0;j<configUPlanXLS.amntOfSemestrsValue;j++) {
+                   cntSem++;
                    let currCol=configUPlanXLS.semestr1Col+3*j;
                    let currCol1=currCol+1;
                    let currCol2=currCol+2;
@@ -171,7 +195,6 @@ convertUpToJSON=(function() {
                    let iLab=getIntegerFromCell({r:i,c:currCol1});
                    let iPra=getIntegerFromCell({r:i,c:currCol2});
                    if  (!((iLek && iLek>0) || (iLab && iLab>0) || (iPra && iPra>0))) continue;
-                   cntSem++;
                    let clocks=[];
                    clocks.push((iLek && iLek>0)?iLek:0);
                    clocks.push((iLab && iLab>0)?iLab:0);
@@ -186,11 +209,15 @@ convertUpToJSON=(function() {
 
        let getCycleForPlan=function(blockRow,basePartRow,varPartRow,vuzRow,studRow,footerRow) {
            let cycle={};
-           let s,s1;
-           s  = getStringFromCell({c:1,r:blockRow,}).trim();
-           s1 = getStringFromCell({c:2,r:blockRow,}).trim();
+           let s,s1,s2,s3;
+           let cell={c:1,r:blockRow};
+
+           s  = getStringFromCell(cell).trim();
+           s1 = getStringFromCell({c:2,r:blockRow}).trim();
+           s2 = getStringFromCell({c:3,r:blockRow}).trim();
+           s3 = getStringFromCell({c:18,r:blockRow}).trim();
            cycle.shifr = s;
-           cycle.name  = s1;
+           cycle.name  = s1.trim()+" "+s2.trim()+" "+s3.trim();
            if (varPartRow>0) {
               s  = getStringFromCell({c:1,r:basePartRow}).trim();
               s1 = getStringFromCell({c:2,r:basePartRow}).trim();
@@ -228,10 +255,11 @@ convertUpToJSON=(function() {
            }
            s  = getStringFromCell({c:1,r:footerRow}).trim();
            s1 = getStringFromCell({c:2,r:footerRow}).trim();
-           footer={};
+           s2 = getStringFromCell({c:3,r:footerRow}).trim();
+           let footer={};
            footer.shifr = s;
-           footer.name  = s1;
-           cycle.footer=footer;
+           footer.name  = s1.toString()+" "+s2.toString();
+           cycle.footer = footer;
 
 
            return cycle;
@@ -324,13 +352,17 @@ convertUpToJSON=(function() {
 
    }
 
-  return function (sheet,configUPlanXLS){
-   if (!sheet) return;
-   selfSheet=sheet;
-   UPlan={};
+  return function (wb,configUPlanXLS){
+   if (!wb) return;
+   let UPlan={};
    if (localStorage.getItem("UPlan")) {
        localStorage.removeItem("UPlan");
    }
+   // Загрузка титула 
+   let sheetNo=configUPlanXLS.sheetTitulNo;
+   if (sheetNo==undefined) sheetNo=0;
+   let sheetName = wb.SheetNames[sheetNo];
+   selfSheet=wb.Sheets[sheetName];
    let s  = getStringFromCell(configUPlanXLS.UGNPShifrCell);
    let s1 = getStringFromCell(configUPlanXLS.UGNPNameCell);
    UPlan.UGNP={shifr:s,name:s1};
@@ -349,8 +381,23 @@ convertUpToJSON=(function() {
    s  = getIntegerFromCell(configUPlanXLS.srokObCell);
    UPlan.srokob=s;
    s  = getStringFromCell(configUPlanXLS.kafedraCell);
+//   console.log('s='+s+" cell="+JSON.stringify(configUPlanXLS.kafedraCell));
+//   console.log(selfSheet);
    UPlan.kafedra=s;
+   s=getStringFromCell(configUPlanXLS.facultetCell);
+   UPlan.facultet=s;
+   s=getStringFromCell(configUPlanXLS.standartCell);
+   UPlan.standart=s;
    s  = configUPlanXLS.amntOfSemestrsValue;
+   try {
+        let podpisi=getArrayOfPodpisi2019(configUPlanXLS);
+        UPlan.podpisi=podpisi;
+   } catch (Error) {}
+// 2 Данные плана
+   sheetNo=configUPlanXLS.sheetupno;
+   if (sheetNo==undefined) sheetNo=3;
+   sheetName = wb.SheetNames[sheetNo];
+   selfSheet=wb.Sheets[sheetName];
    UPlan.amntofsemesters=parseInt(s);
    let wps=getArrayOfIntegerStartFromCell(configUPlanXLS.weekPerSemestrCell,UPlan.amntofsemesters,3);
    UPlan.weekpersemestr=wps;
@@ -379,9 +426,6 @@ convertUpToJSON=(function() {
    UPlan.praktics=practics;
    let gosattestaciya=getArrayOfGosAte(configUPlanXLS);
    UPlan.gosattestaciya=gosattestaciya;
-   let podpisi=getArrayOfPodpisi(configUPlanXLS);
-   UPlan.podpisi=podpisi;
-   
    localStorage.setItem("UPlan",JSON.stringify(UPlan)); 
   }
 }());

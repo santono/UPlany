@@ -1,42 +1,44 @@
-/*-------------------------------------------------------------------- 
+/*
 Scripts for creating and manipulating custom menus based on standard <ul> markup
 Version: 3.0, 03.31.2009
 
 By: Maggie Costello Wachs (maggie@filamentgroup.com) and Scott Jehl (scott@filamentgroup.com)
-	http://www.filamentgroup.com
-	* reference articles: http://www.filamentgroup.com/lab/jquery_ipod_style_drilldown_menu/
-		
+  http://www.filamentgroup.com
+  * reference articles: http://www.filamentgroup.com/lab/jquery_ipod_style_drilldown_menu/
+
 Copyright (c) 2009 Filament Group
-Dual licensed under the MIT (filamentgroup.com/examples/mit-license.txt) and GPL (filamentgroup.com/examples/gpl-license.txt) licenses.
+Dual licensed under the MIT (filamentgroup.com/examples/mit-license.txt)
+ and GPL (filamentgroup.com/examples/gpl-license.txt) licenses.
 --------------------------------------------------------------------*/
 
 
 var allUIMenus = [];
 
-$.fn.menu = function(options){
-	var caller = this;
-	var options = options;
-	var m = new Menu(caller, options);	
-	allUIMenus.push(m);
-	
+//$.fn.menu = function (options) {
+$.fn.menu = function(options) {
+  var caller = this;
+  var options = options;
+  var m = new Menu(caller, options);
+  allUIMenus.push(m);
+
 	$(this)
 	.on("mousedown",function(){
-		if (!m.menuOpen) { m.showLoading(); };
-	})	
+		if (!m.menuOpen) { m.showLoading(); }
+	})
 	.on("click",function(){
-		if (m.menuOpen == false) { m.showMenu(); }
+		if (m.menuOpen === false) { m.showMenu(); }
 		else { m.kill(); };
 		return false;
-	});	
+	});
 };
 
-function Menu(caller, options){
+function Menu(caller, options) {
 	var menu = this;
 	var caller = $(caller);
 	var container = $('<div class="fg-menu-container ui-widget ui-widget-content ui-corner-all">'+options.content+'</div>');
 	this.menuOpen = false;
 	this.menuExists = false;
-	
+
 	var options = jQuery.extend({
 		content: null,
 		width: "50vmax", // width of menu container, must be set or passed in to calculate widths of child menus
@@ -99,7 +101,7 @@ function Menu(caller, options){
 	this.showMenu = function(){
 		killAllMenus();
 		if (!menu.menuExists) {
-		 menu.create() 
+		 menu.create();
 		};
 		caller
 			.addClass('fg-menu-open')

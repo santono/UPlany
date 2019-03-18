@@ -1,3 +1,4 @@
+'use strict'
 var DropSheet = function DropSheet(opts) {
   if(!opts) opts = {};
   var nullfunc = function(){};
@@ -51,14 +52,27 @@ var DropSheet = function DropSheet(opts) {
 
   function process_wb(wb, sheetidx) {
     last_wb = wb;
+    // console.log('sheetNames length='+wb.SheetNames.length);
+    // for (let i=0;i<wb.SheetNames.length;i++) 
+    //   console.log('i='+i+' name='+wb.SheetNames[i]);
+    // wb.SheetNames.forEach(function(sheetName) {
+    //   console.log(sheetName);
+    // });
     opts.on.wb(wb, sheetidx);
-    var sheet = wb.SheetNames[sheetidx||0];
+    let confSheetIdx=configBak.sheetupno;
+    sheetidx=confSheetIdx;
+
+
+    let sheet = wb.SheetNames[sheetidx||0];
+
+//    console.log('sheetidx='+sheetidx);
 //    console.log(wb.sheet(sheet));
 //    console.log(wb.Sheets[sheet]);
+
     let workSheet=wb.Sheets[sheet];
    // console.log(workSheet);
-    convertUpToJSON(workSheet,configBak);
-    console.log('1='+window.location.hostname);
+    convertUpToJSON(wb,configBak2019);
+//    console.log('1='+window.location.hostname);
     if (localStorage.getItem("UPlan"))
        alertify.success('Файл импортирован ', function(){});
      else
@@ -141,6 +155,6 @@ var DropSheet = function DropSheet(opts) {
       else reader.readAsArrayBuffer(f);
     }
   }
-  console.log(window.location.href); 
+//  console.log(window.location.href); 
   if(opts.file && opts.file.addEventListener) opts.file.addEventListener('change', handleFile, false);
 };

@@ -24,7 +24,7 @@ let saveSprToLS=(function() {
           })
          .fail(function( jqXHR, textStatus) {
              loader.hideWait();
-             loader.showFinished('Ошибка чтения списка планов'+textStatus);
+             loader.showFinished('Ошибка чтения списка кафедр'+textStatus);
           });
      }
      let loadAllLists=function() {
