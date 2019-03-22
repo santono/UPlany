@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Учебные планы </title>
+     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/flex.css">
     <link rel="stylesheet" href="css/fg.menu.css" media="screen" />
@@ -411,15 +412,16 @@
             </div>
         </div>
     </div>
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/fg.menu.js"></script>
+    <script src="js/lib/jquery-3.3.1.min.js"></script>
+    <script src="js/lib/fg.menu.js"></script>
 
-    <script type="module" src="./js/planyhats.js"></script>
+    <script type="module" src="./js/models/UPlanEntity.js"></script>
+    <script type="module" src="./js/views/planyhatsview.js"></script>
 
-    <script src="js/ajaxconfiguration.js"></script>
-    <script src="js/loader.js"></script>
-    <script src="js/menugetplan.js"></script>
-    <script src="js/savesprtolocalstorage.js"></script>
+    <script type="module" src="./js/config/ajaxconfiguration.js"></script>
+    <script type="module" src="./js/views/loaderView.js"></script>
+    <script type="module" src="./js/views/menugetplanview.js"></script>
+    <script type="module" src="./js/dao/savesprtolocalstorage.js"></script>
     <script type="module" src="./js/scripts.js"></script>
 </body>
 
