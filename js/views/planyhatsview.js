@@ -1,6 +1,7 @@
 'use strict';
+
 export let hat = (function () {
-       let bakhat = `<!--<thead>-->
+  let bakhat = `<!--<thead>-->
             <tr>
                 <th class="center border-top border-bottom border-left border-right" colspan=51>2018-2019 уч.г.</th>
             </tr>
@@ -110,7 +111,7 @@ export let hat = (function () {
             </tr>
        <!-- </thead> -->`;
 
-       let maghat = `<!-- <thead> -->
+  let maghat = `<!-- <thead> -->
             <tr>
                 <th class="center border-top border-bottom border-left border-right" colspan=51>2018-2019 уч.г.</th>
             </tr>
@@ -205,12 +206,12 @@ export let hat = (function () {
                 <th colspan="3">16</th>
             </tr>
         <!--</thead>-->`;
-       return function (code) {
-             let retVal = bakhat;
-              if (code && +code !== 1) {
-                retVal = maghat;
-              }
-              return retVal;
-       }
+  return (code) => {
+    let retVal = bakhat;
+    if (code && +code !== 1) {
+      retVal = maghat;
+    }
+    return retVal;
+  };
 }());
 //export default hat;

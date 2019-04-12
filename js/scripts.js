@@ -1,43 +1,16 @@
 'use strict';
 
-import { hat } from './views/planyhatsview.js';
+import { planView } from './views/uPlanView.js';
 import { loader } from './views/loaderView.js';
 import { ajaxConfig } from './config/ajaxconfiguration.js';
 import { menugetplan } from './views/menugetplanview.js';
 import { uPlanEntity } from './models/UPlanEntity.js';
-let semclocks = [{ id: 1, name: '0 0 1', clocks: [0, 0, 1] },
-  { id: 2, name: '0 0 2', clocks: [0, 0, 2] },
-  { id: 3, name: '0 0 3', clocks: [0, 0, 3] },
-  { id: 4, name: '1 0 1', clocks: [1, 0, 1] },
-  { id: 5, name: '1 1 0', clocks: [1, 1, 0] },
-  { id: 6, name: '1 0 1', clocks: [1, 2, 0] },
-  { id: 7, name: '2 0 1', clocks: [2, 0, 1] },
-  { id: 8, name: '2 0 2', clocks: [2, 0, 2] },
-  { id: 9, name: '2 0 3', clocks: [2, 0, 3] },
-  { id: 10, name: '2 3 0', clocks: [2, 3, 0] }
-];
+import { User } from './models/userEntity.js';
+import { semclocks } from './models/semClocks.js';
+import { planService } from './services/uPlanService.js';
 var up;
 var user;
 
-class User {
-  constructor(name, rights, shifrKaf) {
-    this.name = name;
-    this.rights = rights;
-    this.shifrKaf = shifrKaf;
-  }
-
-  getName() {
-    return this.name;
-  }
-
-  getRights() {
-    return this.rights;
-  }
-
-  getShifrKaf() {
-    return this.shifrKaf;
-  }
-}
 class Up {
   constructor(uplanouter, bodyfinded) {
     this.disciplina = null;
@@ -431,79 +404,7 @@ class Up {
     }
     return true;
   }
-
-  makeUPlanMarking() {
-    if (!this.uplan.cycly) return;
-    if (this.uplan.cycly.length < 1) return;
-    for (let i = 0; i < this.uplan.cycly.length; i++) {
-      const cycle = this.uplan.cycly[i];
-      cycle.cid = i + 1;
-      if (cycle.basepart) {
-        if (cycle.basepart.disciplines
-                    && Array.isArray(cycle.basepart.disciplines)
-                    && cycle.basepart.disciplines.length > 0) {
-          const disciplines = cycle.basepart.disciplines;
-          for (let j = 0; j < disciplines.length; j++) {
-            const disciplina = disciplines[j];
-            disciplina.did = cycle.cid * 1000 + (j + 1);
-            disciplina.dcycle = cycle.cid;
-          }
-        }
-      }
-      if (cycle.varpart) {
-        if (cycle.varpart.parts) {
-          if (cycle.varpart.parts.vyz) {
-            if (cycle.varpart.parts.vyz.disciplines) {
-              if (Array.isArray(cycle.varpart.parts.vyz.disciplines)) {
-                if (cycle.varpart.parts.vyz.disciplines.length > 0) {
-                  const disciplines = cycle.varpart.parts.vyz.disciplines;
-                  for (let j = 0; j < disciplines.length; j++) {
-                    const disciplina = disciplines[j];
-                    disciplina.did = 1 * 1000000 + cycle.cid * 1000 + (j + 1);
-                    disciplina.dcycle = cycle.cid;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      if (cycle.varpart) {
-        if (cycle.varpart.parts) {
-          if (cycle.varpart.parts.student) {
-            if (cycle.varpart.parts.student.disciplines) {
-              if (Array.isArray(cycle.varpart.parts.student.disciplines)) {
-                if (cycle.varpart.parts.student.disciplines.length > 0) {
-                  const disciplines = cycle.varpart.parts.student.disciplines;
-                  for (let j = 0; j < disciplines.length; j++) {
-                    const disciplina = disciplines[j];
-                    disciplina.did = 2 * 1000000 + cycle.cid * 1000 + (j + 1);
-                    disciplina.dcycle = cycle.cid;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      if (cycle.disciplines
-                && Array.isArray(cycle.disciplines)) {
-        if (cycle.disciplines.length > 0) {
-          const disciplines = cycle.disciplines;
-          for (let j = 0; j < disciplines.length; j++) {
-            const disciplina = disciplines[j];
-            disciplina.did = 3 * 1000000 + cycle.cid * 1000 + (j + 1);
-            disciplina.dcycle = i;
-          }
-        }
-      }
-      if (cycle.footer) {
-        cycle.footer.cid = cycle.cid;
-        cycle.footer.fid = cycle.cid;
-      }
-    }
-  }
-
+/*  
   addTd(tr, text, colspan, clazz) {
     let td = document.createElement('td');
     if (text || text === '0') td.innerText = text;
@@ -515,7 +416,7 @@ class Up {
     }
     tr.appendChild(td);
   }
-
+*/
   makeDisciplinaLine(disciplina) {
     const classCenterBorderNone = 'center border-none';
     const classCenterBorderLeft = 'center border-left';
@@ -524,9 +425,9 @@ class Up {
     let curre = 0;
     let e; let n; let nameClass; let nameClass0; let nameClass1; let
       nameClass2;
-    this.addTd(tr, disciplina.shifr, 1, ' shifrd');
-    this.addTd(tr, disciplina.name, 1, ' named');
-    this.addTd(tr, disciplina.shifrkaf, 1, 'center shifrk');
+    planView.addTd(tr, disciplina.shifr, 1, ' shifrd');
+    planView.addTd(tr, disciplina.name, 1, ' named');
+    planView.addTd(tr, disciplina.shifrkaf, 1, 'center shifrk');
     tr.dataset.did = disciplina.did;
     tr.dataset.cid = disciplina.dcycle;
     for (e = 0; e < 4; e++) {
@@ -535,8 +436,8 @@ class Up {
                 && (disciplina.ekzpersemestr.length > 0)) {
         n = disciplina.ekzpersemestr[curre];
         curre += 1;
-        this.addTd(tr, n, 1, e === 3 ? classCenterBorderRight + nameClass : classCenterBorderNone + nameClass);
-      } else this.addTd(tr, '  ', 1, e === 3 ? classCenterBorderRight + nameClass : classCenterBorderNone + nameClass);
+        planView.addTd(tr, n, 1, e === 3 ? classCenterBorderRight + nameClass : classCenterBorderNone + nameClass);
+      } else planView.addTd(tr, '  ', 1, e === 3 ? classCenterBorderRight + nameClass : classCenterBorderNone + nameClass);
     }
     curre = 0;
     for (e = 0; e < 4; e++) {
@@ -545,11 +446,11 @@ class Up {
                 && (disciplina.zachpersemestr.length > 0)) {
         n = disciplina.zachpersemestr[curre];
         curre += 1; 
-        this.addTd(tr, n, 1, classCenterBorderNone + nameClass);
-      } else this.addTd(tr, '', 1, classCenterBorderNone + nameClass);
+        planView.addTd(tr, n, 1, classCenterBorderNone + nameClass);
+      } else planView.addTd(tr, '', 1, classCenterBorderNone + nameClass);
     }
-    this.addTd(tr, disciplina.kursp ? disciplina.kursp : '', 1, 'center kursp');
-    this.addTd(tr, disciplina.kursr ? disciplina.kursr : '', 1, 'center kursr');
+    planView.addTd(tr, disciplina.kursp ? disciplina.kursp : '', 1, 'center kursp');
+    planView.addTd(tr, disciplina.kursr ? disciplina.kursr : '', 1, 'center kursr');
     curre = 0;
     for (e = 0; e < 4; e++) {
       nameClass = ' indz' + (e + 1);
@@ -557,15 +458,15 @@ class Up {
                 && (disciplina.indzpersemestr.length > 0)) {
         n = disciplina.indzpersemestr[curre];
         curre += 1;
-        this.addTd(tr, n, 1, classCenterBorderNone + nameClass);
-      } else this.addTd(tr, '', 1, classCenterBorderNone + nameClass);
+        planView.addTd(tr, n, 1, classCenterBorderNone + nameClass);
+      } else planView.addTd(tr, '', 1, classCenterBorderNone + nameClass);
     }
-    this.addTd(tr, disciplina.clocktot, 1, 'center clocks clocktot');
-    this.addTd(tr, disciplina.ze, 1, 'center clocks clockze');
-    this.addTd(tr, disciplina.clocklek ? disciplina.clocklek : '', 1, 'center clocks clocklek');
-    this.addTd(tr, disciplina.clocklab ? disciplina.clocklab : '', 1, 'center clocks clocklab');
-    this.addTd(tr, disciplina.clockpra ? disciplina.clockpra : '', 1, 'center clocks clockpra');
-    this.addTd(tr, disciplina.clocksam ? disciplina.clocksam : '', 1, 'center clocks clocksam');
+    planView.addTd(tr, disciplina.clocktot, 1, 'center clocks clocktot');
+    planView.addTd(tr, disciplina.ze, 1, 'center clocks clockze');
+    planView.addTd(tr, disciplina.clocklek ? disciplina.clocklek : '', 1, 'center clocks clocklek');
+    planView.addTd(tr, disciplina.clocklab ? disciplina.clocklab : '', 1, 'center clocks clocklab');
+    planView.addTd(tr, disciplina.clockpra ? disciplina.clockpra : '', 1, 'center clocks clockpra');
+    planView.addTd(tr, disciplina.clocksam ? disciplina.clocksam : '', 1, 'center clocks clocksam');
     curre = -1;
     let nomsemestra = 0;
     if ((disciplina.semestry)
@@ -578,18 +479,18 @@ class Up {
       nameClass1 = ' sem' + (e + 1) + 'lab';
       nameClass2 = ' sem' + (e + 1) + 'pra';
       if ((e + 1) === +nomsemestra) {
-        this.addTd(tr, disciplina.semestry[curre].clocks[0], 1, classCenterBorderLeft + nameClass0);
-        this.addTd(tr, disciplina.semestry[curre].clocks[1], 1, classCenterBorderNone + nameClass1);
-        this.addTd(tr, disciplina.semestry[curre].clocks[2], 1, classCenterBorderNone + nameClass2);
+        planView.addTd(tr, disciplina.semestry[curre].clocks[0], 1, classCenterBorderLeft + nameClass0);
+        planView.addTd(tr, disciplina.semestry[curre].clocks[1], 1, classCenterBorderNone + nameClass1);
+        planView.addTd(tr, disciplina.semestry[curre].clocks[2], 1, classCenterBorderNone + nameClass2);
         curre += 1;
         if (curre < disciplina.semestry.length) {
           nomsemestra = disciplina.semestry[curre].nomsemestra;
         }
         continue;
       }
-      this.addTd(tr, '', 1, classCenterBorderLeft + nameClass0);
-      this.addTd(tr, '', 1, classCenterBorderNone + nameClass1);
-      this.addTd(tr, '', 1, classCenterBorderNone + nameClass2);
+      planView.addTd(tr, '', 1, classCenterBorderLeft + nameClass0);
+      planView.addTd(tr, '', 1, classCenterBorderNone + nameClass1);
+      planView.addTd(tr, '', 1, classCenterBorderNone + nameClass2);
     }
     this.body.appendChild(tr);
   } // end of makeDisciplinaLine
@@ -662,21 +563,21 @@ class Up {
       tr = document.createElement('tr');
       tr.dataset.fid = cycle.footer.fid;
       tr.className = 'cyclefooter';
-      this.addTd(tr, cycle.footer.shifr, 1, ' cyclefooter');
-      this.addTd(tr, cycle.footer.name, 16, ' cyclefooter');
-      this.addTd(tr, summaClockTot, 1, ' clocktot');
-      this.addTd(tr, summaZE, 1, ' center clockze');
-      this.addTd(tr, summaClockLek > 0 ? summaClockLek : '', 1, 'center clocklek');
-      this.addTd(tr, summaClockLab > 0 ? summaClockLab : '', 1, 'center clocklab');
-      this.addTd(tr, summaClockPra > 0 ? summaClockPra : '', 1, 'center clockpra');
-      this.addTd(tr, summaClockSam > 0 ? summaClockSam : '', 1, 'center clocksam');
+      planView.addTd(tr, cycle.footer.shifr, 1, ' cyclefooter');
+      planView.addTd(tr, cycle.footer.name, 16, ' cyclefooter');
+      planView.addTd(tr, summaClockTot, 1, ' clocktot');
+      planView.addTd(tr, summaZE, 1, ' center clockze');
+      planView.addTd(tr, summaClockLek > 0 ? summaClockLek : '', 1, 'center clocklek');
+      planView.addTd(tr, summaClockLab > 0 ? summaClockLab : '', 1, 'center clocklab');
+      planView.addTd(tr, summaClockPra > 0 ? summaClockPra : '', 1, 'center clockpra');
+      planView.addTd(tr, summaClockSam > 0 ? summaClockSam : '', 1, 'center clocksam');
 
       for (e = 0; e < this.uplan.amntofsemesters; e++) {
         semClassName = 'sem' + (e + 1);
-        if (e < 7) this.addTd(tr, summySem[e] > 0 ? summySem[e] : '', 3, ' center ' + semClassName);
+        if (e < 7) planView.addTd(tr, summySem[e] > 0 ? summySem[e] : '', 3, ' center ' + semClassName);
         else {
         //                    this.addTd(tr, summySem[e] > 0 ? summySem[e] : "", 3, "center border-top border-left border-right " + semClassName);
-          this.addTd(tr, summySem[e] > 0 ? summySem[e] : '', 3, ' center ' + semClassName); 
+          planView.addTd(tr, summySem[e] > 0 ? summySem[e] : '', 3, ' center ' + semClassName); 
         }
       }
       this.body.appendChild(tr);
@@ -711,17 +612,17 @@ class Up {
     tr = document.createElement('tr');
     //    tr.dataset.fid=cycle.footer.fid;
     tr.className = 'planfooter';
-    this.addTd(tr, this.uplan.footer.shifr, 1, '');
-    this.addTd(tr, this.uplan.footer.name, 16, '');
-    this.addTd(tr, footerLine.summaClockTot, 1, 'center clocktot');
-    this.addTd(tr, footerLine.summaZE, 1, 'center clockze');
-    this.addTd(tr, footerLine.summaClockLek > 0 ? footerLine.summaClockLek : '', 1, 'center clocklek');
-    this.addTd(tr, footerLine.summaClockLab > 0 ? footerLine.summaClockLab : '', 1, 'center clocklab');
-    this.addTd(tr, footerLine.summaClockPra > 0 ? footerLine.summaClockPra : '', 1, 'center clockpra');
-    this.addTd(tr, footerLine.summaClockSam > 0 ? footerLine.summaClockSam : '', 1, 'center clocksam');
+    planView.addTd(tr, this.uplan.footer.shifr, 1, '');
+    planView.addTd(tr, this.uplan.footer.name, 16, '');
+    planView.addTd(tr, footerLine.summaClockTot, 1, 'center clocktot');
+    planView.addTd(tr, footerLine.summaZE, 1, 'center clockze');
+    planView.addTd(tr, footerLine.summaClockLek > 0 ? footerLine.summaClockLek : '', 1, 'center clocklek');
+    planView.addTd(tr, footerLine.summaClockLab > 0 ? footerLine.summaClockLab : '', 1, 'center clocklab');
+    planView.addTd(tr, footerLine.summaClockPra > 0 ? footerLine.summaClockPra : '', 1, 'center clockpra');
+    planView.addTd(tr, footerLine.summaClockSam > 0 ? footerLine.summaClockSam : '', 1, 'center clocksam');
     for (e = 0; e < this.uplan.amntofsemesters; e++) {
       semClassName = 'sem' + (i + 1);
-      this.addTd(tr, footerLine.summySem[e] > 0 ? footerLine.summySem[e] : '', 3, 'center ' + semClassName);
+      planView.addTd(tr, footerLine.summySem[e] > 0 ? footerLine.summySem[e] : '', 3, 'center ' + semClassName);
     }
     this.body.appendChild(tr);
   }
@@ -876,15 +777,15 @@ class Up {
     for (i = 0; i < this.uplan.cycly.length; i++) {
       tr = document.createElement('tr');
       tr.dataset.cid = this.uplan.cycly[i].cid;
-      this.addTd(tr, this.uplan.cycly[i].shifr, 1, 'cycleheader');
-      this.addTd(tr, this.uplan.cycly[i].name, this.isBakalavr() ? 50 : 50 - 12, 'cycleheader');
+      planView.addTd(tr, this.uplan.cycly[i].shifr, 1, 'cycleheader');
+      planView.addTd(tr, this.uplan.cycly[i].name, planService.isBakalavr() ? 50 : 50 - 12, 'cycleheader');
       this.body.appendChild(tr);
       if (this.uplan.cycly[i].basepart) {
         cycle = this.uplan.cycly[i].basepart;
         tr = document.createElement('tr');
-        this.addTd(tr, cycle.shifr, 1, 'cycleheader');
+        planView.addTd(tr, cycle.shifr, 1, 'cycleheader');
 
-        this.addTd(tr, cycle.name, this.isBakalavr() ? 50 : 50 - 12, 'cycleheader');
+        planView.addTd(tr, cycle.name, planService.isBakalavr() ? 50 : 50 - 12, 'cycleheader');
         this.body.appendChild(tr);
         for (j = 0; j < cycle.disciplines.length; j++) {
           disciplina = cycle.disciplines[j];
@@ -894,13 +795,13 @@ class Up {
       if (this.uplan.cycly[i].varpart) {
         cycle = this.uplan.cycly[i].varpart;
         tr = document.createElement('tr');
-        this.addTd(tr, cycle.shifr, 1, 'cycleheader');
-        this.addTd(tr, cycle.name, this.isBakalavr() ? 50 : 50 - 12, 'cycleheader');
+        planView.addTd(tr, cycle.shifr, 1, 'cycleheader');
+        planView.addTd(tr, cycle.name, planService.isBakalavr() ? 50 : 50 - 12, 'cycleheader');
         this.body.appendChild(tr);
         part = cycle.parts.vyz;
         tr = document.createElement('tr');
-        this.addTd(tr, part.shifr, 1, 'cycleheader');
-        this.addTd(tr, part.name, this.isBakalavr() ? 50 : 50 - 12, 'cycleheader');
+        planView.addTd(tr, part.shifr, 1, 'cycleheader');
+        planView.addTd(tr, part.name, planService.isBakalavr() ? 50 : 50 - 12, 'cycleheader');
         this.body.appendChild(tr);
         for (j = 0; j < part.disciplines.length; j++) {
           disciplina = part.disciplines[j];
@@ -908,8 +809,8 @@ class Up {
         }
         part = cycle.parts.student;
         tr = document.createElement('tr');
-        this.addTd(tr, part.shifr, 1, 'cycleheader');
-        this.addTd(tr, part.name, this.isBakalavr() ? 50 : 50 - 12, 'cycleheader');
+        planView.addTd(tr, part.shifr, 1, 'cycleheader');
+        planView.addTd(tr, part.name, planService.isBakalavr() ? 50 : 50 - 12, 'cycleheader');
         this.body.appendChild(tr);
         for (j = 0; j < part.disciplines.length; j++) {
           disciplina = part.disciplines[j];
@@ -930,24 +831,6 @@ class Up {
   }
 
   // end of makeUPlanLines;
-  isBakalavr() {
-    if (this.uplan.okr.toUpperCase() === 'БАКАЛАВР') return true;
-    return false;
-  }
-
-  isMagistr() {
-    if (this.uplan.okr === 'Магистр') return true;
-    return false;
-  }
-
-  makeUPlanHat() {
-    let planHat;
-    if (this.isMagistr()) planHat = hat(2);
-    else planHat = hat(1);
-    $('#idplanhat').empty();
-    let el = document.querySelector('#idplanhat');
-    el.innerHTML = planHat;
-  }
 
   makeInformPart() {
     let tr = document.createElement('tr');
@@ -973,22 +856,22 @@ class Up {
     //    tr.dataset.fid=cycle.footer.fid;
     tr.className = 'planfooter';
     tr.dataset.cid = 101;
-    this.addTd(tr, 'Информационная часть', this.isBakalavr() ? 51 : 51 - 12, ' center');
+    planView.addTd(tr, 'Информационная часть', planService.isBakalavr() ? 51 : 51 - 12, ' center');
     this.body.appendChild(tr);
     tr = document.createElement('tr');
-    this.addTd(tr, 'Практики', 17, ' center');
-    this.addTd(tr, 'Учебные занятия (часов в неделю)', 6, '');
+    planView.addTd(tr, 'Практики', 17, ' center');
+    planView.addTd(tr, 'Учебные занятия (часов в неделю)', 6, '');
     for (let i = 0; i < this.uplan.amntofsemesters; i++) {
-      this.addTd(tr, this.uplan.clocksperweek[i], 3, ' center');
+      planView.addTd(tr, this.uplan.clocksperweek[i], 3, ' center');
     }
     this.body.appendChild(tr);
     tr = document.createElement('tr');
-    this.addTd(tr, '№', 1, ' center');
-    this.addTd(tr, 'Название', 2, ' center');
-    this.addTd(tr, 'Семестр', 5, ' center');
-    this.addTd(tr, 'Кол. недель', 5, ' center');
-    this.addTd(tr, 'ЗЕ', 4, ' center');
-    this.addTd(tr, 'Курсовые проекты', 5, '');
+    planView.addTd(tr, '№', 1, ' center');
+    planView.addTd(tr, 'Название', 2, ' center');
+    planView.addTd(tr, 'Семестр', 5, ' center');
+    planView.addTd(tr, 'Кол. недель', 5, ' center');
+    planView.addTd(tr, 'ЗЕ', 4, ' center');
+    planView.addTd(tr, 'Курсовые проекты', 5, '');
     let totalAmntOfKursP = 0;
     let totalAmntOfKursR = 0;
     let totalAmntOfIndZ = 0;
@@ -997,75 +880,75 @@ class Up {
     if (this.uplan.nmbofkursp && Array.isArray(this.uplan.nmbofkursp)) {
       this.uplan.nmbofkursp.forEach((item)=>{ if (+item > 0) totalAmntOfKursP += 1; });
     }
-    this.addTd(tr, totalAmntOfKursP, 1, 'center');
+    planView.addTd(tr, totalAmntOfKursP, 1, 'center');
     for (let i = 0; i < this.uplan.amntofsemesters; i++) {
-      this.addTd(tr, this.uplan.nmbofkursp[i] > 0 ? this.uplan.nmbofkursp[i] : '-', 3, ' center');
+      planView.addTd(tr, this.uplan.nmbofkursp[i] > 0 ? this.uplan.nmbofkursp[i] : '-', 3, ' center');
     }
     this.body.appendChild(tr);
     for (let j = 0; j < 5; j++) {
       tr = document.createElement('tr');
       if (praktics[j].npp > 0) {
-        this.addTd(tr, praktics[j].npp, 1, ' center');
-        this.addTd(tr, praktics[j].name, 2, '');
-        this.addTd(tr, praktics[j].nomsemestra, 5, ' center');
-        this.addTd(tr, praktics[j].nmbofweek, 5, ' center');
-        this.addTd(tr, praktics[j].ze, 4, ' center');
+        planView.addTd(tr, praktics[j].npp, 1, ' center');
+        planView.addTd(tr, praktics[j].name, 2, '');
+        planView.addTd(tr, praktics[j].nomsemestra, 5, ' center');
+        planView.addTd(tr, praktics[j].nmbofweek, 5, ' center');
+        planView.addTd(tr, praktics[j].ze, 4, ' center');
       } else {
-        this.addTd(tr, '', 1, ' center');
-        this.addTd(tr, '', 2, ' center');
-        this.addTd(tr, '', 5, ' center');
-        this.addTd(tr, '', 5, ' center');
-        this.addTd(tr, '', 4, ' center');
+        planView.addTd(tr, '', 1, ' center');
+        planView.addTd(tr, '', 2, ' center');
+        planView.addTd(tr, '', 5, ' center');
+        planView.addTd(tr, '', 5, ' center');
+        planView.addTd(tr, '', 4, ' center');
       }
       switch (j) {
         case 0:
-          this.addTd(tr, 'Курсовые работы', 5, '');
+          planView.addTd(tr, 'Курсовые работы', 5, '');
           if (this.uplan.nmbofkursr && Array.isArray(this.uplan.nmbofkursr)) {
             this.uplan.nmbofkursr.forEach((item)=>{ if (+item > 0) totalAmntOfKursR += item; });
           }
-          this.addTd(tr, +totalAmntOfKursR, 1, 'center');
+          planView.addTd(tr, +totalAmntOfKursR, 1, 'center');
           for (let i = 0; i < this.uplan.amntofsemesters; i++) {
-            this.addTd(tr, this.uplan.nmbofkursr[i] > 0 ? this.uplan.nmbofkursr[i] : '-', 3, ' center');
+            planView.addTd(tr, this.uplan.nmbofkursr[i] > 0 ? this.uplan.nmbofkursr[i] : '-', 3, ' center');
           }
           break;
         case 1:
-          this.addTd(tr, 'Индивидуальные задания', 5, '');
+          planView.addTd(tr, 'Индивидуальные задания', 5, '');
           //                    if (this.uplan.nmbofindz && Array.isArray(this.uplan.nmbofindz))
           //                       this.uplan.nmbofindz.forEach((item)=>{if (+item>0) totalAmntOfIndZ=totalAmntOfIndZ+item});
           for (let i = 0; i < this.uplan.amntofsemesters; i++) {
             totalAmntOfIndZ = totalAmntOfIndZ + this.uplan.nmbofindz[i] > 0
               ? this.uplan.nmbofindz[i] : 0;
           }
-          this.addTd(tr, +totalAmntOfIndZ, 1, 'center');
+          planView.addTd(tr, +totalAmntOfIndZ, 1, 'center');
           for (let i = 0; i < this.uplan.amntofsemesters; i++) {
-            this.addTd(tr, this.uplan.nmbofindz[i] > 0 ? this.uplan.nmbofindz[i] : '-', 3, ' center');
+            planView.addTd(tr, this.uplan.nmbofindz[i] > 0 ? this.uplan.nmbofindz[i] : '-', 3, ' center');
           }
           break;
         case 2:
-          this.addTd(tr, 'Экзамены', 5, '');
+          planView.addTd(tr, 'Экзамены', 5, '');
           if (this.uplan.nmbofekz
             && Array.isArray(this.uplan.nmbofekz)) {
             this.uplan.nmbofekz.forEach((item)=>{ if (+item > 0) totalAmntOfEkz += item; });
           }
-          this.addTd(tr, +totalAmntOfEkz, 1, 'center');
+          planView.addTd(tr, +totalAmntOfEkz, 1, 'center');
           for (let i = 0; i < this.uplan.amntofsemesters; i++) {
-            this.addTd(tr, this.uplan.nmbofekz[i] > 0 ? this.uplan.nmbofekz[i] : '-', 3, ' center');
+            planView.addTd(tr, this.uplan.nmbofekz[i] > 0 ? this.uplan.nmbofekz[i] : '-', 3, ' center');
           }
           break;
         case 3:
-          this.addTd(tr, 'Зачеты', 5, '');
+          planView.addTd(tr, 'Зачеты', 5, '');
           if (this.uplan.nmbofzach && Array.isArray(this.uplan.nmbofzach)) {
             this.uplan.nmbofzach.forEach(item=>{ if (+item > 0) totalAmntOfZach += item; });
           }
-          this.addTd(tr, +totalAmntOfZach, 1, 'center');
+          planView.addTd(tr, +totalAmntOfZach, 1, 'center');
           for (let i = 0; i < this.uplan.amntofsemesters; i++) {
-            this.addTd(tr, this.uplan.nmbofzach[i] > 0 ? this.uplan.nmbofzach[i] : '-', 3, ' center');
+            planView.addTd(tr, this.uplan.nmbofzach[i] > 0 ? this.uplan.nmbofzach[i] : '-', 3, ' center');
           }
           break;
         case 4:
-          this.addTd(tr, 'ЗЕ', 6, '');
+          planView.addTd(tr, 'ЗЕ', 6, '');
           for (let i = 0; i < this.uplan.amntofsemesters; i++) {
-            this.addTd(tr, this.uplan.nmbofze[i] > 0 ? this.uplan.nmbofze[i] : '-', 3, ' center');
+            planView.addTd(tr, this.uplan.nmbofze[i] > 0 ? this.uplan.nmbofze[i] : '-', 3, ' center');
           }
           break;
         default:
@@ -1075,43 +958,43 @@ class Up {
       this.body.appendChild(tr);
     }
     tr = document.createElement('tr');
-    this.addTd(tr, 'Количество изучаемых дисциплин', 8, ' right');
-    this.addTd(tr, '50', 9, ' center');
-    this.addTd(tr, 'ЗЕ за учебный год', 6, '');
+    planView.addTd(tr, 'Количество изучаемых дисциплин', 8, ' right');
+    planView.addTd(tr, '50', 9, ' center');
+    planView.addTd(tr, 'ЗЕ за учебный год', 6, '');
     for (let i = 0; i < this.uplan.amntofsemesters / 2; i++) {
-      this.addTd(tr, this.uplan.nmbofze[i * 2] + this.uplan.nmbofze[i * 2 + 1] > 0 ? this.uplan.nmbofze[i * 2] + this.uplan.nmbofze[i * 2 + 1] : '-', 6, ' center');
+      planView.addTd(tr, this.uplan.nmbofze[i * 2] + this.uplan.nmbofze[i * 2 + 1] > 0 ? this.uplan.nmbofze[i * 2] + this.uplan.nmbofze[i * 2 + 1] : '-', 6, ' center');
     }
     this.body.appendChild(tr);
     tr = document.createElement('tr');
     tr.className = 'planfooter';
     tr.dataset.cid = 102;
-    this.addTd(tr, 'ГОСУДАРСТВЕННАЯ АТТЕСТАЦИЯ', this.isBakalavr() ? 51 : 51 - 12, ' center');
+    planView.addTd(tr, 'ГОСУДАРСТВЕННАЯ АТТЕСТАЦИЯ', planService.isBakalavr() ? 51 : 51 - 12, ' center');
     this.body.appendChild(tr);
     tr = document.createElement('tr');
-    this.addTd(tr, '№', 1, ' center');
-    this.addTd(tr, 'Программа подготовки', 1, ' center');
-    this.addTd(tr, 'Название', this.isBakalavr() ? 36 : 36 - 12, ' center');
-    this.addTd(tr, 'Семестр', 5, ' center');
-    this.addTd(tr, 'ЗЕ', 4, ' center');
+    planView.addTd(tr, '№', 1, ' center');
+    planView.addTd(tr, 'Программа подготовки', 1, ' center');
+    planView.addTd(tr, 'Название', planService.isBakalavr() ? 36 : 36 - 12, ' center');
+    planView.addTd(tr, 'Семестр', 5, ' center');
+    planView.addTd(tr, 'ЗЕ', 4, ' center');
     this.body.appendChild(tr);
     if (this.uplan.gosattestaciya
          && Array.isArray(this.uplan.gosattestaciya)
          && this.uplan.gosattestaciya.length > 0) {
       for (let i = 0; i < this.uplan.gosattestaciya.length; i++) {
         tr = document.createElement('tr');
-        this.addTd(tr, this.uplan.gosattestaciya[i].npp, 1, ' center');
-        this.addTd(tr, this.uplan.gosattestaciya[i].okr, 1, '');
-        this.addTd(tr, this.uplan.gosattestaciya[i].name, this.isBakalavr() ? 36 : 36 - 12, '');
-        this.addTd(tr, this.uplan.gosattestaciya[i].nomsemestra, 5, ' center');
-        this.addTd(tr, this.uplan.gosattestaciya[i].ze, this.isBakalavr() ? 36 : 36 - 12, ' center');
+        planView.addTd(tr, this.uplan.gosattestaciya[i].npp, 1, ' center');
+        planView.addTd(tr, this.uplan.gosattestaciya[i].okr, 1, '');
+        planView.addTd(tr, this.uplan.gosattestaciya[i].name, planService.isBakalavr() ? 36 : 36 - 12, '');
+        planView.addTd(tr, this.uplan.gosattestaciya[i].nomsemestra, 5, ' center');
+        planView.addTd(tr, this.uplan.gosattestaciya[i].ze, planService.isBakalavr() ? 36 : 36 - 12, ' center');
         this.body.appendChild(tr);
       }
     }
   }
 
   showPlan() {
-    this.makeUPlanMarking();
-    this.makeUPlanHat();
+    planService.makeUPlanMarking();
+    planView.makeUPlanHat();
     this.makeUPlanLines();
     this.makePlanFooter();
     this.makeInformPart();
@@ -1402,7 +1285,7 @@ window.onload = function () {
               up.fillUpdateDiscForm();
             }
           }
-          if (up.isMagistr()) {
+          if (planService.isMagistr()) {
             $('#isem5b').hide();
             $('#isem6b').hide();
             $('#isem7b').hide();
@@ -1499,7 +1382,7 @@ window.onload = function () {
               up.fillUpdateDiscForm();
             }
           }
-          if (up.isMagistr()) {
+          if (planService.isMagistr()) {
             $('#isem5b').hide();
             $('#isem6b').hide();
             $('#isem7b').hide();

@@ -1,7 +1,7 @@
 'use strict';
 
-import { ajaxConfig } from './config/ajaxconfiguration.js';
-import { loader } from './views/loaderView.js';
+import { ajaxConfig } from '../config/ajaxconfiguration.js';
+import { loader } from '../views/loaderView.js';
 export let saveSprToLS = (function dummySTS() {
   if (typeof (Storage) === 'undefined') {
     alert('Локальная БД не поддерживается Вашим броузером');

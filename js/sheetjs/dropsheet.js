@@ -1,24 +1,25 @@
-'use strict'
-var DropSheet = function DropSheet(opts) {
-  if(!opts) opts = {};
-  var nullfunc = function(){};
-  if(!opts.errors)         opts.errors = {};
-  if(!opts.errors.badfile) opts.errors.badfile = nullfunc;
-  if(!opts.errors.pending) opts.errors.pending = nullfunc;
-  if(!opts.errors.failed)  opts.errors.failed = nullfunc;
-  if(!opts.errors.large)   opts.errors.large = nullfunc;
-  if(!opts.on)             opts.on = {};
-  if(!opts.on.workstart)   opts.on.workstart = nullfunc;
-  if(!opts.on.workend)     opts.on.workend = nullfunc;
-  if(!opts.on.sheet)       opts.on.sheet = nullfunc;
-  if(!opts.on.wb)          opts.on.wb = nullfunc;
+'use strict';
 
-  var rABS      = typeof FileReader !== 'undefined' && FileReader.prototype && FileReader.prototype.readAsBinaryString;
+var DropSheet = function DropSheet(opts) {
+  if (!opts) opts = {};
+  var nullfunc = function () {};
+  if (!opts.errors)         opts.errors = {};
+  if (!opts.errors.badfile) opts.errors.badfile = nullfunc;
+  if (!opts.errors.pending) opts.errors.pending = nullfunc;
+  if (!opts.errors.failed)  opts.errors.failed = nullfunc;
+  if (!opts.errors.large)   opts.errors.large = nullfunc;
+  if (!opts.on)             opts.on = {};
+  if (!opts.on.workstart)   opts.on.workstart = nullfunc;
+  if (!opts.on.workend)     opts.on.workend = nullfunc;
+  if (!opts.on.sheet)       opts.on.sheet = nullfunc;
+  if (!opts.on.wb)          opts.on.wb = nullfunc;
+
+  var rABS = typeof FileReader !== 'undefined' && FileReader.prototype && FileReader.prototype.readAsBinaryString;
   var useworker = typeof Worker !== 'undefined';
-  var pending   = false;
+  var pending = false;
   function fixdata(data) {
-    var o = "", l = 0, w = 10240;
-    for(; l<data.byteLength/w; ++l)
+    var o = '', l = 0, w = 10240;
+    for(; l < data.byteLength/w; ++l)
       o+=String.fromCharCode.apply(null,new Uint8Array(data.slice(l*w,l*w+w)));
       o+=String.fromCharCode.apply(null, new Uint8Array(data.slice(o.length)));
     return o;
@@ -84,30 +85,30 @@ var DropSheet = function DropSheet(opts) {
     e.preventDefault();
     if(pending) return opts.errors.pending();
     var files = e.dataTransfer.files;
-    var i,f;
-    for (i = 0, f = files[i]; i != files.length; ++i) {
-      var reader = new FileReader();
-      var name = f.name;
-      reader.onload = function(e) {
-        var data = e.target.result;
-        var wb, arr;
-        var readtype = {type: rABS ? 'binary' : 'base64' };
-        if(!rABS) {
+ //   let f;
+    for (let i = 0, f = files[i]; i !== files.length; ++i) {
+      let reader = new FileReader();
+      let name = f.name;
+      reader.onload = function (e) {
+        let data = e.target.result;
+        let wb, arr;
+        let readtype = {type: rABS ? 'binary' : 'base64' };
+        if (!rABS) {
           arr = fixdata(data);
           data = btoa(arr);
         }
         function doit() {
           try {
-            if(useworker) { sheetjsw(data, process_wb, readtype); return; }
+            if (useworker) { sheetjsw(data, process_wb, readtype); return; }
             wb = XLSX.read(data, readtype);
             process_wb(wb);
-          } catch(e) { console.log(e); opts.errors.failed(e); }
+          } catch (e) { console.log(e); opts.errors.failed(e); }
         }
 
-        if(e.target.result.length > 1e6) opts.errors.large(e.target.result.length, function(e) { if(e) doit(); });
+        if (e.target.result.length > 1e6) opts.errors.large(e.target.result.length, function(e) { if(e) doit(); });
         else { doit(); }
       };
-      if(rABS) reader.readAsBinaryString(f);
+      if (rABS) reader.readAsBinaryString(f);
       else reader.readAsArrayBuffer(f);
     }
   }
@@ -118,7 +119,7 @@ var DropSheet = function DropSheet(opts) {
     e.dataTransfer.dropEffect = 'copy';
   }
 
-  if(opts.drop.addEventListener) {
+  if (opts.drop.addEventListener) {
     opts.drop.addEventListener('dragenter', handleDragover, false);
     opts.drop.addEventListener('dragover', handleDragover, false);
     opts.drop.addEventListener('drop', handleDrop, false);
@@ -126,35 +127,34 @@ var DropSheet = function DropSheet(opts) {
 
   function handleFile(e) {
 //    alert("Handle file");
-    if(pending) return opts.errors.pending();
-    var files = e.target.files;
-    var i,f;
-    for (i = 0, f = files[i]; i != files.length; ++i) {
-      var reader = new FileReader();
-      var name = f.name;
-      reader.onload = function(e) {
+    if (pending) return opts.errors.pending();
+    let files = e.target.files;
+    for (let i= 0, f = files[i]; i !== files.length; ++i) {
+      let reader = new FileReader();
+      let name = f.name;
+      reader.onload = function (e) {
         var data = e.target.result;
         var wb, arr;
         var readtype = {type: rABS ? 'binary' : 'base64' };
-        if(!rABS) {
+        if (!rABS) {
           arr = fixdata(data);
           data = btoa(arr);
         }
         function doit() {
           try {
-            if(useworker) { sheetjsw(data, process_wb, readtype); return; }
+            if (useworker) { sheetjsw(data, process_wb, readtype); return; }
             wb = XLSX.read(data, readtype);
             process_wb(wb);
-          } catch(e) { console.log(e); opts.errors.failed(e); }
+          } catch (e) { console.log(e); opts.errors.failed(e); }
         }
 
-        if(e.target.result.length > 1e6) opts.errors.large(e.target.result.length, function(e) { if(e) doit(); });
+        if (e.target.result.length > 1e6) opts.errors.large(e.target.result.length, function(e) { if(e) doit(); });
         else { doit(); }
       };
-      if(rABS) reader.readAsBinaryString(f);
+      if (rABS) reader.readAsBinaryString(f);
       else reader.readAsArrayBuffer(f);
     }
   }
 //  console.log(window.location.href); 
-  if(opts.file && opts.file.addEventListener) opts.file.addEventListener('change', handleFile, false);
+  if (opts.file && opts.file.addEventListener) opts.file.addEventListener('change', handleFile, false);
 };
