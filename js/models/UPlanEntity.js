@@ -4,7 +4,7 @@ export let uPlanEntity = {
   UGNP: { shifr: '09.00.00', name: 'Информатика и вычислительная техника' },
   napr: { shifr: '09.03.02', name: 'Информационные системы и технологии' },
   profil: { shifr: '09.03.02.02', name: 'Информационные системы и технологии' },
-  formaob: 'Очная',
+  formaob: 'очная',
   yearpost: 2018,
   okr: 'Бакалавр',
   srokob: 4,
@@ -1150,4 +1150,7 @@ export let uPlanEntity = {
       fio: 'Серебряков А.И.'
     }
   ]
+};
+export let setUPlanEntity = (newPlanEntity) => {
+  uPlanEntity = { ...newPlanEntity };
 };

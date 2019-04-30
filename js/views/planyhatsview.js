@@ -3,7 +3,7 @@
 export let hat = (function () {
   let bakhat = `<!--<thead>-->
             <tr>
-                <th class="center border-top border-bottom border-left border-right" colspan=51>2018-2019 уч.г.</th>
+                <th id="hatYear" class="center border-top border-bottom border-left border-right" colspan=51>2018-2019 уч.г.</th>
             </tr>
             <tr>
                 <th rowspan=6>№ п/п</th>
@@ -113,7 +113,7 @@ export let hat = (function () {
 
   let maghat = `<!-- <thead> -->
             <tr>
-                <th class="center border-top border-bottom border-left border-right" colspan=51>2018-2019 уч.г.</th>
+                <th id="hatYear" class="center border-top border-bottom border-left border-right" colspan=51>2018-2019 уч.г.</th>
             </tr>
             <tr>
                 <th rowspan=6>№ п/п</th>

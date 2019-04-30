@@ -2,7 +2,7 @@
 
 import { ajaxConfig } from '../config/ajaxconfiguration.js';
 import { loader } from '../views/loaderView.js';
-export let menugetplan = (function dummyMGP(conf) {
+export let menugetplan = (function (conf) {
 //     let fixedURL = "https://api.mlab.com/api/1/databases/uplany/collections/usersplany?";
 //     let apiKey   = "kaUDFzJwz5GfBtAeUnriufsAYkJLyfLf";
 //    let user     = {shifrKaf:95};
@@ -50,7 +50,7 @@ export let menugetplan = (function dummyMGP(conf) {
     for (let i = 0; i < data[0].childrens.length; i++) {
       convertToHierarchyMenu(ul, data[0].childrens[i]);
     }
- //             console.log(ul);
+//              console.log(conf.rootElement);
     let r = document.querySelector(conf.rootElement);
  //             console.log(r);
     r.appendChild(ul);
